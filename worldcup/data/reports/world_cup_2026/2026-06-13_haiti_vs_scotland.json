@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-14T15:43:58.367080+08:00",
+  "match": {
+    "match_id": "wc2026_003",
+    "prediction_date": "2026-06-13",
+    "kickoff_time": null,
+    "home_team": "Haiti",
+    "away_team": "Scotland",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": null,
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "AWAY_WIN",
+    "predicted_scoreline": "1-1",
+    "predicted_home_score": 1,
+    "predicted_away_score": 1,
+    "scoreline_probability": 0.112214,
+    "home_win_probability": 0.251573,
+    "draw_probability": 0.238019,
+    "away_win_probability": 0.510408,
+    "expected_home_goals": 1.1382,
+    "expected_away_goals": 1.7224,
+    "expected_total_goals": 2.8606,
+    "over_2_5_probability": 0.544828,
+    "under_2_5_probability": 0.455172,
+    "both_teams_score_probability": 0.558192,
+    "top_scorelines": [
+      {
+        "home_score": 1,
+        "away_score": 1,
+        "scoreline": "1-1",
+        "result": "DRAW",
+        "probability": 0.112214
+      },
+      {
+        "home_score": 0,
+        "away_score": 1,
+        "scoreline": "0-1",
+        "result": "AWAY_WIN",
+        "probability": 0.098589
+      },
+      {
+        "home_score": 1,
+        "away_score": 2,
+        "scoreline": "1-2",
+        "result": "AWAY_WIN",
+        "probability": 0.096638
+      },
+      {
+        "home_score": 0,
+        "away_score": 2,
+        "scoreline": "0-2",
+        "result": "AWAY_WIN",
+        "probability": 0.084905
+      },
+      {
+        "home_score": 1,
+        "away_score": 0,
+        "scoreline": "1-0",
+        "result": "HOME_WIN",
+        "probability": 0.06515
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 1.1382,
+    "base_away_expected_goals": 1.7224,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.05,
+    "adjustment_reasons": [
+      "基础公式已包含Elo差值、近期战绩和主客场信息",
+      "中立场地条件下无主场优势调整必要",
+      "缺少天气、伤停、首发信息，不应进行大幅修正",
+      "Haiti最近5场防线数据（失0.8球）与基础模型一致",
+      "Scotland进攻优势（ELO+87、胜率+20%）已在基础预期进球中充分体现"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Haiti",
+      "normalized_team": "Haiti",
+      "latest_finished_match_date": "2026-06-05",
+      "elo": 1656.0073,
+      "total_historical_matches": 510,
+      "rest_days": 8,
+      "matches_5": 5,
+      "win_rate_5": 0.4,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.4,
+      "avg_goals_for_5": 1.6,
+      "avg_goals_against_5": 0.8,
+      "avg_goal_difference_5": 0.8,
+      "avg_points_5": 1.4,
+      "clean_sheet_rate_5": 0.4,
+      "scoring_rate_5": 0.8,
+      "matches_10": 10,
+      "win_rate_10": 0.4,
+      "draw_rate_10": 0.3,
+      "loss_rate_10": 0.3,
+      "avg_goals_for_10": 1.5,
+      "avg_goals_against_10": 1.0,
+      "avg_goal_difference_10": 0.5,
+      "avg_points_10": 1.5,
+      "clean_sheet_rate_10": 0.5,
+      "scoring_rate_10": 0.7
+    },
+    "away": {
+      "team": "Scotland",
+      "normalized_team": "Scotland",
+      "latest_finished_match_date": "2026-06-06",
+      "elo": 1743.303548,
+      "total_historical_matches": 851,
+      "rest_days": 7,
+      "matches_5": 5,
+      "win_rate_5": 0.6,
+      "draw_rate_5": 0.0,
+      "loss_rate_5": 0.4,
+      "avg_goals_for_5": 2.4,
+      "avg_goals_against_5": 1.0,
+      "avg_goal_difference_5": 1.4,
+      "avg_points_5": 1.8,
+      "clean_sheet_rate_5": 0.2,
+      "scoring_rate_5": 0.6,
+      "matches_10": 10,
+      "win_rate_10": 0.6,
+      "draw_rate_10": 0.1,
+      "loss_rate_10": 0.3,
+      "avg_goals_for_10": 2.1,
+      "avg_goals_against_10": 1.0,
+      "avg_goal_difference_10": 1.1,
+      "avg_points_10": 1.9,
+      "clean_sheet_rate_10": 0.3,
+      "scoring_rate_10": 0.7
+    },
+    "differences": {
+      "elo_difference": -87.2962,
+      "win_rate_5_difference": -0.2,
+      "win_rate_10_difference": -0.2,
+      "avg_points_5_difference": -0.4,
+      "avg_goals_for_5_difference": -0.8,
+      "avg_goals_against_5_difference": -0.2,
+      "rest_days_difference": 1
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Haiti vs Scotland：模型预测比分 1-1",
+    "summary": "模型预测Haiti 1-1 Scotland。主胜概率25.2%，平局概率23.8%，客胜概率51.0%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}

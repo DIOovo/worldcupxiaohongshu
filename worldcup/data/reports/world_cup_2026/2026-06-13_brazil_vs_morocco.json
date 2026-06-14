@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-14T15:43:46.280602+08:00",
+  "match": {
+    "match_id": "wc2026_002",
+    "prediction_date": "2026-06-13",
+    "kickoff_time": null,
+    "home_team": "Brazil",
+    "away_team": "Morocco",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": null,
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "AWAY_WIN",
+    "predicted_scoreline": "1-1",
+    "predicted_home_score": 1,
+    "predicted_away_score": 1,
+    "scoreline_probability": 0.097867,
+    "home_win_probability": 0.371877,
+    "draw_probability": 0.227696,
+    "away_win_probability": 0.400427,
+    "expected_home_goals": 1.6476,
+    "expected_away_goals": 1.716,
+    "expected_total_goals": 3.3636,
+    "over_2_5_probability": 0.65314,
+    "under_2_5_probability": 0.34686,
+    "both_teams_score_probability": 0.662295,
+    "top_scorelines": [
+      {
+        "home_score": 1,
+        "away_score": 1,
+        "scoreline": "1-1",
+        "result": "DRAW",
+        "probability": 0.097867
+      },
+      {
+        "home_score": 1,
+        "away_score": 2,
+        "scoreline": "1-2",
+        "result": "AWAY_WIN",
+        "probability": 0.083969
+      },
+      {
+        "home_score": 2,
+        "away_score": 1,
+        "scoreline": "2-1",
+        "result": "HOME_WIN",
+        "probability": 0.080622
+      },
+      {
+        "home_score": 2,
+        "away_score": 2,
+        "scoreline": "2-2",
+        "result": "DRAW",
+        "probability": 0.069174
+      },
+      {
+        "home_score": 0,
+        "away_score": 1,
+        "scoreline": "0-1",
+        "result": "AWAY_WIN",
+        "probability": 0.059399
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 1.6476,
+    "base_away_expected_goals": 1.716,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.05,
+    "adjustment_reasons": [
+      "No additional contextual data provided (weather, injuries, starting lineups)",
+      "Morocco's exceptional defensive metrics (0.3 avg goals conceded in 10 matches, 70% clean sheet rate) are already incorporated in base calculation via away_defense_conceded: 0.405",
+      "Brazil's Elo advantage and recent form disparities already factored into base model",
+      "Neutral venue correctly applied - no home advantage adjustment warranted",
+      "No clear systematic overestimation or underestimation detected in base xG values"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Brazil",
+      "normalized_team": "Brazil",
+      "latest_finished_match_date": "2026-06-06",
+      "elo": 1926.365496,
+      "total_historical_matches": 1059,
+      "rest_days": 7,
+      "matches_5": 5,
+      "win_rate_5": 0.6,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.2,
+      "avg_goals_for_5": 2.6,
+      "avg_goals_against_5": 1.4,
+      "avg_goal_difference_5": 1.2,
+      "avg_points_5": 2.0,
+      "clean_sheet_rate_5": 0.0,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.6,
+      "draw_rate_10": 0.1,
+      "loss_rate_10": 0.3,
+      "avg_goals_for_10": 2.5,
+      "avg_goals_against_10": 1.1,
+      "avg_goal_difference_10": 1.4,
+      "avg_points_10": 1.9,
+      "clean_sheet_rate_10": 0.3,
+      "scoring_rate_10": 0.9
+    },
+    "away": {
+      "team": "Morocco",
+      "normalized_team": "Morocco",
+      "latest_finished_match_date": "2026-06-07",
+      "elo": 1873.276952,
+      "total_historical_matches": 617,
+      "rest_days": 6,
+      "matches_5": 5,
+      "win_rate_5": 0.6,
+      "draw_rate_5": 0.4,
+      "loss_rate_5": 0.0,
+      "avg_goals_for_5": 2.6,
+      "avg_goals_against_5": 0.6,
+      "avg_goal_difference_5": 2.0,
+      "avg_points_5": 2.2,
+      "clean_sheet_rate_5": 0.4,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.7,
+      "draw_rate_10": 0.3,
+      "loss_rate_10": 0.0,
+      "avg_goals_for_10": 2.2,
+      "avg_goals_against_10": 0.3,
+      "avg_goal_difference_10": 1.9,
+      "avg_points_10": 2.4,
+      "clean_sheet_rate_10": 0.7,
+      "scoring_rate_10": 0.9
+    },
+    "differences": {
+      "elo_difference": 53.0885,
+      "win_rate_5_difference": 0.0,
+      "win_rate_10_difference": -0.1,
+      "avg_points_5_difference": -0.2,
+      "avg_goals_for_5_difference": 0.0,
+      "avg_goals_against_5_difference": 0.8,
+      "rest_days_difference": 1
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Brazil vs Morocco：模型预测比分 1-1",
+    "summary": "模型预测Brazil 1-1 Morocco。主胜概率37.2%，平局概率22.8%，客胜概率40.0%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}

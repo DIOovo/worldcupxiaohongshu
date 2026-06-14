@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-14T15:44:49.587530+08:00",
+  "match": {
+    "match_id": "wc2026_006",
+    "prediction_date": "2026-06-14",
+    "kickoff_time": null,
+    "home_team": "Ivory Coast",
+    "away_team": "Ecuador",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": null,
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "AWAY_WIN",
+    "predicted_scoreline": "1-1",
+    "predicted_home_score": 1,
+    "predicted_away_score": 1,
+    "scoreline_probability": 0.128134,
+    "home_win_probability": 0.322462,
+    "draw_probability": 0.270093,
+    "away_win_probability": 0.407445,
+    "expected_home_goals": 1.1504,
+    "expected_away_goals": 1.3283,
+    "expected_total_goals": 2.4787,
+    "over_2_5_probability": 0.450704,
+    "under_2_5_probability": 0.549296,
+    "both_teams_score_probability": 0.502412,
+    "top_scorelines": [
+      {
+        "home_score": 1,
+        "away_score": 1,
+        "scoreline": "1-1",
+        "result": "DRAW",
+        "probability": 0.128134
+      },
+      {
+        "home_score": 0,
+        "away_score": 1,
+        "scoreline": "0-1",
+        "result": "AWAY_WIN",
+        "probability": 0.111382
+      },
+      {
+        "home_score": 1,
+        "away_score": 0,
+        "scoreline": "1-0",
+        "result": "HOME_WIN",
+        "probability": 0.096465
+      },
+      {
+        "home_score": 1,
+        "away_score": 2,
+        "scoreline": "1-2",
+        "result": "AWAY_WIN",
+        "probability": 0.0851
+      },
+      {
+        "home_score": 0,
+        "away_score": 0,
+        "scoreline": "0-0",
+        "result": "DRAW",
+        "probability": 0.083853
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 1.1504,
+    "base_away_expected_goals": 1.3283,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.85,
+    "adjustment_reasons": [
+      "All key factors (Elo, recent form, rest days) already incorporated in baseline model",
+      "No supplementary data provided (injuries, weather, lineup changes)",
+      "Neutral venue removes home advantage consideration",
+      "3-day rest advantage is minor and likely captured in existing metrics",
+      "Baseline xG values appear consistent with input features"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Ivory Coast",
+      "normalized_team": "Ivory Coast",
+      "latest_finished_match_date": "2026-06-04",
+      "elo": 1734.361289,
+      "total_historical_matches": 636,
+      "rest_days": 10,
+      "matches_5": 5,
+      "win_rate_5": 0.8,
+      "draw_rate_5": 0.0,
+      "loss_rate_5": 0.2,
+      "avg_goals_for_5": 2.4,
+      "avg_goals_against_5": 0.8,
+      "avg_goal_difference_5": 1.6,
+      "avg_points_5": 2.4,
+      "clean_sheet_rate_5": 0.6,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.7,
+      "draw_rate_10": 0.1,
+      "loss_rate_10": 0.2,
+      "avg_goals_for_10": 1.9,
+      "avg_goals_against_10": 0.8,
+      "avg_goal_difference_10": 1.1,
+      "avg_points_10": 2.2,
+      "clean_sheet_rate_10": 0.5,
+      "scoring_rate_10": 0.9
+    },
+    "away": {
+      "team": "Ecuador",
+      "normalized_team": "Ecuador",
+      "latest_finished_match_date": "2026-06-07",
+      "elo": 1895.243566,
+      "total_historical_matches": 591,
+      "rest_days": 7,
+      "matches_5": 5,
+      "win_rate_5": 0.6,
+      "draw_rate_5": 0.4,
+      "loss_rate_5": 0.0,
+      "avg_goals_for_5": 1.8,
+      "avg_goals_against_5": 0.6,
+      "avg_goal_difference_5": 1.2,
+      "avg_points_5": 2.2,
+      "clean_sheet_rate_5": 0.4,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.4,
+      "draw_rate_10": 0.6,
+      "loss_rate_10": 0.0,
+      "avg_goals_for_10": 1.2,
+      "avg_goals_against_10": 0.5,
+      "avg_goal_difference_10": 0.7,
+      "avg_points_10": 1.8,
+      "clean_sheet_rate_10": 0.5,
+      "scoring_rate_10": 0.8
+    },
+    "differences": {
+      "elo_difference": -160.8823,
+      "win_rate_5_difference": 0.2,
+      "win_rate_10_difference": 0.3,
+      "avg_points_5_difference": 0.2,
+      "avg_goals_for_5_difference": 0.6,
+      "avg_goals_against_5_difference": 0.2,
+      "rest_days_difference": 3
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Ivory Coast vs Ecuador：模型预测比分 1-1",
+    "summary": "模型预测Ivory Coast 1-1 Ecuador。主胜概率32.2%，平局概率27.0%，客胜概率40.7%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-14T15:44:33.800304+08:00",
+  "match": {
+    "match_id": "wc2026_005",
+    "prediction_date": "2026-06-14",
+    "kickoff_time": null,
+    "home_team": "Germany",
+    "away_team": "Curaçao",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": null,
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "HOME_WIN",
+    "predicted_scoreline": "2-0",
+    "predicted_home_score": 2,
+    "predicted_away_score": 0,
+    "scoreline_probability": 0.092175,
+    "home_win_probability": 0.732291,
+    "draw_probability": 0.153506,
+    "away_win_probability": 0.114204,
+    "expected_home_goals": 2.6803,
+    "expected_away_goals": 0.9843,
+    "expected_total_goals": 3.6646,
+    "over_2_5_probability": 0.707995,
+    "under_2_5_probability": 0.292005,
+    "both_teams_score_probability": 0.583292,
+    "top_scorelines": [
+      {
+        "home_score": 2,
+        "away_score": 0,
+        "scoreline": "2-0",
+        "result": "HOME_WIN",
+        "probability": 0.092175
+      },
+      {
+        "home_score": 2,
+        "away_score": 1,
+        "scoreline": "2-1",
+        "result": "HOME_WIN",
+        "probability": 0.090728
+      },
+      {
+        "home_score": 3,
+        "away_score": 0,
+        "scoreline": "3-0",
+        "result": "HOME_WIN",
+        "probability": 0.082352
+      },
+      {
+        "home_score": 3,
+        "away_score": 1,
+        "scoreline": "3-1",
+        "result": "HOME_WIN",
+        "probability": 0.081059
+      },
+      {
+        "home_score": 1,
+        "away_score": 0,
+        "scoreline": "1-0",
+        "result": "HOME_WIN",
+        "probability": 0.06878
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 2.6803,
+    "base_away_expected_goals": 0.9843,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.95,
+    "adjustment_reasons": [
+      "无提供天气、伤停名单或首发信息，无明显影响因素",
+      "基础公式已充分融合Elo差值(322.5)、近期5场和10场表现数据",
+      "Germany最近表现(5连胜、均进3.6球)和Curaçao防线漏洞已在基础计算中体现",
+      "中立场地条件已在模型考虑范围内，不需额外主客队调整",
+      "基础预期进球(2.68 vs 0.98)与两队实力对比相符"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Germany",
+      "normalized_team": "Germany",
+      "latest_finished_match_date": "2026-06-06",
+      "elo": 1890.813942,
+      "total_historical_matches": 1031,
+      "rest_days": 8,
+      "matches_5": 5,
+      "win_rate_5": 1.0,
+      "draw_rate_5": 0.0,
+      "loss_rate_5": 0.0,
+      "avg_goals_for_5": 3.6,
+      "avg_goals_against_5": 1.0,
+      "avg_goal_difference_5": 2.6,
+      "avg_points_5": 3.0,
+      "clean_sheet_rate_5": 0.4,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.9,
+      "draw_rate_10": 0.0,
+      "loss_rate_10": 0.1,
+      "avg_goals_for_10": 2.8,
+      "avg_goals_against_10": 0.8,
+      "avg_goal_difference_10": 2.0,
+      "avg_points_10": 2.7,
+      "clean_sheet_rate_10": 0.5,
+      "scoring_rate_10": 0.9
+    },
+    "away": {
+      "team": "Curaçao",
+      "normalized_team": "Curaçao",
+      "latest_finished_match_date": "2026-06-06",
+      "elo": 1568.316613,
+      "total_historical_matches": 385,
+      "rest_days": 8,
+      "matches_5": 5,
+      "win_rate_5": 0.2,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.6,
+      "avg_goals_for_5": 1.2,
+      "avg_goals_against_5": 2.2,
+      "avg_goal_difference_5": -1.0,
+      "avg_points_5": 0.8,
+      "clean_sheet_rate_5": 0.4,
+      "scoring_rate_5": 0.6,
+      "matches_10": 10,
+      "win_rate_10": 0.4,
+      "draw_rate_10": 0.3,
+      "loss_rate_10": 0.3,
+      "avg_goals_for_10": 1.9,
+      "avg_goals_against_10": 1.4,
+      "avg_goal_difference_10": 0.5,
+      "avg_points_10": 1.5,
+      "clean_sheet_rate_10": 0.5,
+      "scoring_rate_10": 0.7
+    },
+    "differences": {
+      "elo_difference": 322.4973,
+      "win_rate_5_difference": 0.8,
+      "win_rate_10_difference": 0.5,
+      "avg_points_5_difference": 2.2,
+      "avg_goals_for_5_difference": 2.4,
+      "avg_goals_against_5_difference": -1.2,
+      "rest_days_difference": 0
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Germany vs Curaçao：模型预测比分 2-0",
+    "summary": "模型预测Germany 2-0 Curaçao。主胜概率73.2%，平局概率15.4%，客胜概率11.4%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}

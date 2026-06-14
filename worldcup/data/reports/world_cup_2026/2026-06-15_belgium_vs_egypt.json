@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-14T15:45:36.545207+08:00",
+  "match": {
+    "match_id": "wc2026_009",
+    "prediction_date": "2026-06-15",
+    "kickoff_time": null,
+    "home_team": "Belgium",
+    "away_team": "Egypt",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": null,
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "HOME_WIN",
+    "predicted_scoreline": "2-0",
+    "predicted_home_score": 2,
+    "predicted_away_score": 0,
+    "scoreline_probability": 0.117207,
+    "home_win_probability": 0.74614,
+    "draw_probability": 0.156723,
+    "away_win_probability": 0.097136,
+    "expected_home_goals": 2.4928,
+    "expected_away_goals": 0.7858,
+    "expected_total_goals": 3.2786,
+    "over_2_5_probability": 0.63585,
+    "under_2_5_probability": 0.36415,
+    "both_teams_score_probability": 0.499197,
+    "top_scorelines": [
+      {
+        "home_score": 2,
+        "away_score": 0,
+        "scoreline": "2-0",
+        "result": "HOME_WIN",
+        "probability": 0.117207
+      },
+      {
+        "home_score": 3,
+        "away_score": 0,
+        "scoreline": "3-0",
+        "result": "HOME_WIN",
+        "probability": 0.097391
+      },
+      {
+        "home_score": 1,
+        "away_score": 0,
+        "scoreline": "1-0",
+        "result": "HOME_WIN",
+        "probability": 0.094036
+      },
+      {
+        "home_score": 2,
+        "away_score": 1,
+        "scoreline": "2-1",
+        "result": "HOME_WIN",
+        "probability": 0.092101
+      },
+      {
+        "home_score": 3,
+        "away_score": 1,
+        "scoreline": "3-1",
+        "result": "HOME_WIN",
+        "probability": 0.07653
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 2.4928,
+    "base_away_expected_goals": 0.7858,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.15,
+    "adjustment_reasons": [
+      "缺少天气、伤停、首发信息，无法进行有针对性修正",
+      "Elo、近5场、近10场表现已被基础公式充分利用，避免重复调整",
+      "中立场地已标记，不需补偿主场优势",
+      "基础预期进球（比利时2.49、埃及0.79）与双方数据特征相符，无明显高估或低估"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Belgium",
+      "normalized_team": "Belgium",
+      "latest_finished_match_date": "2026-06-06",
+      "elo": 1859.520211,
+      "total_historical_matches": 853,
+      "rest_days": 9,
+      "matches_5": 5,
+      "win_rate_5": 0.8,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.0,
+      "avg_goals_for_5": 4.0,
+      "avg_goals_against_5": 0.6,
+      "avg_goal_difference_5": 3.4,
+      "avg_points_5": 2.6,
+      "clean_sheet_rate_5": 0.6,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.7,
+      "draw_rate_10": 0.3,
+      "loss_rate_10": 0.0,
+      "avg_goals_for_10": 3.7,
+      "avg_goals_against_10": 0.6,
+      "avg_goal_difference_10": 3.1,
+      "avg_points_10": 2.4,
+      "clean_sheet_rate_10": 0.6,
+      "scoring_rate_10": 0.9
+    },
+    "away": {
+      "team": "Egypt",
+      "normalized_team": "Egypt",
+      "latest_finished_match_date": "2026-06-06",
+      "elo": 1742.529382,
+      "total_historical_matches": 756,
+      "rest_days": 9,
+      "matches_5": 5,
+      "win_rate_5": 0.4,
+      "draw_rate_5": 0.4,
+      "loss_rate_5": 0.2,
+      "avg_goals_for_5": 1.2,
+      "avg_goals_against_5": 0.4,
+      "avg_goal_difference_5": 0.8,
+      "avg_points_5": 1.6,
+      "clean_sheet_rate_5": 0.8,
+      "scoring_rate_5": 0.6,
+      "matches_10": 10,
+      "win_rate_10": 0.5,
+      "draw_rate_10": 0.3,
+      "loss_rate_10": 0.2,
+      "avg_goals_for_10": 1.3,
+      "avg_goals_against_10": 0.6,
+      "avg_goal_difference_10": 0.7,
+      "avg_points_10": 1.8,
+      "clean_sheet_rate_10": 0.6,
+      "scoring_rate_10": 0.6
+    },
+    "differences": {
+      "elo_difference": 116.9908,
+      "win_rate_5_difference": 0.4,
+      "win_rate_10_difference": 0.2,
+      "avg_points_5_difference": 1.0,
+      "avg_goals_for_5_difference": 2.8,
+      "avg_goals_against_5_difference": 0.2,
+      "rest_days_difference": 0
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Belgium vs Egypt：模型预测比分 2-0",
+    "summary": "模型预测Belgium 2-0 Egypt。主胜概率74.6%，平局概率15.7%，客胜概率9.7%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}
