@@ -1,0 +1,6 @@
+2026/05/12-15:13:26.348 5b5df Reusing MANIFEST /Users/gaoheyang/Desktop/python/AI/xhs_ai/browser_profile/toutiao/Default/Local Storage/leveldb/MANIFEST-000001
+2026/05/12-15:13:26.350 5b5df Recovering log #4
+2026/05/12-15:13:26.351 5b5df Reusing old log /Users/gaoheyang/Desktop/python/AI/xhs_ai/browser_profile/toutiao/Default/Local Storage/leveldb/000004.log 
+2026/05/12-15:18:32.669 5b5e2 Level-0 table #8: started
+2026/05/12-15:18:32.675 5b5e2 Level-0 table #8: 17251 bytes OK
+2026/05/12-15:18:32.683 5b5e2 Delete type=0 #4

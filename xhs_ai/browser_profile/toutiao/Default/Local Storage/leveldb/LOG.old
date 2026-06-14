@@ -1,0 +1,5 @@
+2026/05/12-15:11:19.285 5a699 Creating DB /Users/gaoheyang/Desktop/python/AI/xhs_ai/browser_profile/toutiao/Default/Local Storage/leveldb since it was missing.
+2026/05/12-15:11:19.289 5a699 Reusing MANIFEST /Users/gaoheyang/Desktop/python/AI/xhs_ai/browser_profile/toutiao/Default/Local Storage/leveldb/MANIFEST-000001
+2026/05/12-15:11:37.879 5a69e Level-0 table #5: started
+2026/05/12-15:11:37.882 5a69e Level-0 table #5: 40112 bytes OK
+2026/05/12-15:11:37.884 5a69e Delete type=0 #3

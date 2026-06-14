@@ -1,0 +1,70 @@
+{
+  "fixture": {
+    "match_id": "wc2026-mex-rsa",
+    "kickoff": "2026-06-12T19:00:00+08:00",
+    "stage": "小组赛",
+    "home_team": "墨西哥",
+    "away_team": "南非",
+    "status": "scheduled"
+  },
+  "intelligence": {
+    "match_id": "wc2026-mex-rsa",
+    "updated_at": "2026-06-12T08:00:00+08:00",
+    "sources": ["licensed-demo"],
+    "home_metrics": {"team": "墨西哥", "fifa_rank": 15},
+    "away_metrics": {"team": "南非", "fifa_rank": 58},
+    "home_availability": {"team": "墨西哥", "players": []},
+    "away_availability": {"team": "南非", "players": []},
+    "head_to_head": [],
+    "odds": [],
+    "weather": {"condition": "晴"},
+    "venue": {"stadium": "示例球场"},
+    "travel": null,
+    "notes": []
+  },
+  "consensus": {
+    "generated_at": "2026-06-12T08:30:00+08:00",
+    "champion_predictions": [],
+    "match_predictions": [
+      {
+        "match_id": "wc2026-mex-rsa",
+        "home_team": "墨西哥",
+        "away_team": "南非",
+        "home_goals": 2,
+        "away_goals": 1,
+        "home_win_probability": 0.55,
+        "draw_probability": 0.25,
+        "away_win_probability": 0.2,
+        "rationale": "主队综合概率占优"
+      }
+    ],
+    "agreement_score": 0.8,
+    "agent_count": 4,
+    "warnings": ["临场阵容尚未确认"]
+  },
+  "agents": [
+    {
+      "agent_id": "form",
+      "provider_id": "mock",
+      "generated_at": "2026-06-12T08:10:00+08:00",
+      "confidence": 0.72,
+      "key_findings": ["墨西哥近期状态更稳定", "中场控制可能决定比赛节奏"],
+      "risks": [],
+      "match_predictions": [],
+      "champion_predictions": [],
+      "cited_urls": []
+    },
+    {
+      "agent_id": "tactics",
+      "provider_id": "mock",
+      "generated_at": "2026-06-12T08:12:00+08:00",
+      "confidence": 0.7,
+      "key_findings": ["墨西哥近期状态更稳定", "南非反击效率是主要变量", "第四条不应出现"],
+      "risks": [],
+      "match_predictions": [],
+      "champion_predictions": [],
+      "cited_urls": []
+    }
+  ],
+  "articles": []
+}
