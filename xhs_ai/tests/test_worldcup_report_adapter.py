@@ -48,14 +48,35 @@ def test_normalizes_match_prediction_report_schema(tmp_path):
                     "home_win_probability": 0.74614,
                     "draw_probability": 0.156723,
                     "away_win_probability": 0.097136,
+                    "expected_home_goals": 2.4928,
+                    "expected_away_goals": 0.7858,
+                    "over_2_5_probability": 0.63585,
                 },
                 "model_details": {
                     "model": "test-model",
                     "adjustment_reasons": ["历史数据支持主队占优"],
                 },
                 "team_features": {
-                    "home": {"team": "Belgium"},
-                    "away": {"team": "Egypt"},
+                    "home": {
+                        "team": "Belgium",
+                        "elo": 1859.520211,
+                        "matches_5": 5,
+                        "win_rate_5": 0.8,
+                        "draw_rate_5": 0.2,
+                        "loss_rate_5": 0.0,
+                        "avg_goals_for_5": 4.0,
+                        "avg_goals_against_5": 0.6,
+                    },
+                    "away": {
+                        "team": "Egypt",
+                        "elo": 1742.529382,
+                        "matches_5": 5,
+                        "win_rate_5": 0.4,
+                        "draw_rate_5": 0.4,
+                        "loss_rate_5": 0.2,
+                        "avg_goals_for_5": 1.2,
+                        "avg_goals_against_5": 0.4,
+                    },
                 },
                 "weather": None,
             },
@@ -75,6 +96,12 @@ def test_normalizes_match_prediction_report_schema(tmp_path):
     assert "Belgium" not in draft.content
     assert "Egypt" not in draft.content
     assert "具体开球时间未提供" in draft.content
+    assert draft.metadata["key_findings"] == [
+        "实力评分方面，比利时约为1860分，埃及约为1743分，比利时高出约117分",
+        "近五场表现方面，比利时5场4胜1平0负；埃及5场2胜2平1负。"
+        "同期比利时场均进4.0球、失0.6球，埃及场均进1.2球、失0.4球",
+        "预期进球为比利时2.49球、埃及0.79球，总进球超过两球半的概率约为63.6%",
+    ]
 
 
 def test_missing_file_raises_clear_error(tmp_path):
@@ -216,3 +243,13 @@ def test_rejects_unsafe_humanized_analysis(text):
     draft = adapter.build_post_draft(load_fixture())
     with pytest.raises(ValueError):
         adapter.apply_humanized_analysis(draft, text)
+
+
+def test_rejects_humanized_analysis_that_asks_user_for_more_data():
+    adapter = WorldCupReportAdapter()
+    draft = adapter.build_post_draft(load_fixture())
+    with pytest.raises(ValueError, match="没有直接完成"):
+        adapter.apply_humanized_analysis(
+            draft,
+            "目前缺少具体分析，能否提供更多资料？",
+        )

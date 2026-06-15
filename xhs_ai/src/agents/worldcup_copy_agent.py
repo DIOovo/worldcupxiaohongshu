@@ -15,6 +15,7 @@ class WorldCupCopyAgent:
     system_prompt = (
         "把自己当成一个小编。你负责把足球赛前分析改写成自然、有人味的中文短文，"
         "语气像认真看球后和朋友分享观点，不要写成报告。"
+        "无论素材多少都必须直接完成文案，禁止向用户提问或索要更多资料。"
     )
 
     def __init__(self, llm_service: Any = None):
@@ -44,6 +45,8 @@ class WorldCupCopyAgent:
 4. 不得编造伤停、首发、排名、赔率或其他原文没有的信息。
 5. 不得写“必胜”“稳赢”等确定性结论，不要给出投注建议。
 6. 只返回改写后的正文，不要标题、序号、标签或解释。
+7. 素材缺少天气、球员、战术或历史交锋时，不要索要资料，也不要列出需要补充的项目。
+8. 必须根据已经给出的实力评分、近期表现和预期进球直接写成完整分析。
 """.strip()
         result = self.llm_service.generate_text(self.system_prompt, user_prompt)
         return self._clean_result(result)

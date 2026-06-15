@@ -165,6 +165,7 @@ class WorldCupReportAdapter:
                 else "具体开球时间未提供"
             )
         reasons = self._string_list(model_details.get("adjustment_reasons"))
+        analysis_findings = self._build_report_analysis_findings(report)
         warnings: List[str] = []
         if not match.get("kickoff_time"):
             warnings.append("报告未提供具体开球时间。")
@@ -207,7 +208,8 @@ class WorldCupReportAdapter:
                 {
                     "agent_id": str(model_details.get("model") or "prediction_model"),
                     "provider_id": "worldcup_report",
-                    "key_findings": reasons,
+                    "key_findings": analysis_findings or reasons,
+                    "method_notes": reasons,
                 }
             ],
             "intelligence": self._normalize_intelligence(report),
@@ -383,6 +385,18 @@ class WorldCupReportAdapter:
             raise ValueError("改写结果包含不允许出现的表述")
         if any(term in cleaned for term in self.prohibited_claim_terms):
             raise ValueError("改写结果包含未经报告支持的确定性表述")
+        question_terms = (
+            "能否提供",
+            "请提供",
+            "需要提供",
+            "请补充",
+            "无法进行分析",
+            "没有具体",
+            "缺少具体",
+            "我需要",
+        )
+        if "？" in cleaned or any(term in cleaned for term in question_terms):
+            raise ValueError("改写结果没有直接完成赛前分析")
 
         pattern = re.compile(
             r"【赛前看法】\n.*?(?=\n\n【数据状态】)",
@@ -646,6 +660,94 @@ class WorldCupReportAdapter:
                 if len(findings) == 3:
                     return findings
         return findings
+
+    def _build_report_analysis_findings(self, report: Dict[str, Any]) -> List[str]:
+        """从真实报告中整理可直接用于文案的球队数据。"""
+
+        team_features = report.get("team_features")
+        prediction = report.get("prediction")
+        if not isinstance(team_features, dict):
+            return []
+
+        home = team_features.get("home")
+        away = team_features.get("away")
+        if not isinstance(home, dict) or not isinstance(away, dict):
+            return []
+
+        home_team = self._translate_team(home.get("team"))
+        away_team = self._translate_team(away.get("team"))
+        findings: List[str] = []
+
+        home_elo = self._optional_number(home.get("elo"))
+        away_elo = self._optional_number(away.get("elo"))
+        if home_elo is not None and away_elo is not None:
+            difference = home_elo - away_elo
+            leader = home_team if difference >= 0 else away_team
+            findings.append(
+                f"实力评分方面，{home_team}约为{home_elo:.0f}分，"
+                f"{away_team}约为{away_elo:.0f}分，{leader}高出约{abs(difference):.0f}分"
+            )
+
+        home_form = self._format_recent_form(home, home_team, window=5)
+        away_form = self._format_recent_form(away, away_team, window=5)
+        home_goals = self._optional_number(home.get("avg_goals_for_5"))
+        home_against = self._optional_number(home.get("avg_goals_against_5"))
+        away_goals = self._optional_number(away.get("avg_goals_for_5"))
+        away_against = self._optional_number(away.get("avg_goals_against_5"))
+        if home_form and away_form:
+            sentence = f"近五场表现方面，{home_form}；{away_form}"
+            if None not in (home_goals, home_against, away_goals, away_against):
+                sentence += (
+                    f"。同期{home_team}场均进{home_goals:.1f}球、失{home_against:.1f}球，"
+                    f"{away_team}场均进{away_goals:.1f}球、失{away_against:.1f}球"
+                )
+            findings.append(sentence)
+
+        if isinstance(prediction, dict):
+            home_xg = self._optional_number(prediction.get("expected_home_goals"))
+            away_xg = self._optional_number(prediction.get("expected_away_goals"))
+            over_probability = self._optional_number(
+                prediction.get("over_2_5_probability")
+            )
+            if home_xg is not None and away_xg is not None:
+                sentence = (
+                    f"预期进球为{home_team}{home_xg:.2f}球、"
+                    f"{away_team}{away_xg:.2f}球"
+                )
+                if over_probability is not None:
+                    sentence += f"，总进球超过两球半的概率约为{over_probability:.1%}"
+                findings.append(sentence)
+
+        return findings
+
+    @staticmethod
+    def _optional_number(value: Any) -> float | None:
+        if value is None or isinstance(value, bool):
+            return None
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
+    @classmethod
+    def _format_recent_form(
+        cls,
+        features: Dict[str, Any],
+        team: str,
+        *,
+        window: int,
+    ) -> str:
+        matches = cls._optional_number(features.get(f"matches_{window}"))
+        win_rate = cls._optional_number(features.get(f"win_rate_{window}"))
+        draw_rate = cls._optional_number(features.get(f"draw_rate_{window}"))
+        loss_rate = cls._optional_number(features.get(f"loss_rate_{window}"))
+        if None in (matches, win_rate, draw_rate, loss_rate):
+            return ""
+        match_count = int(matches)
+        wins = round(match_count * win_rate)
+        draws = round(match_count * draw_rate)
+        losses = round(match_count * loss_rate)
+        return f"{team}{match_count}场{wins}胜{draws}平{losses}负"
 
     @staticmethod
     def _translate_team(team: str) -> str:

@@ -19,5 +19,7 @@ def test_copy_agent_uses_editor_prompt_and_returns_plain_chinese():
     )
     assert len(service.calls) == 1
     assert "把自己当成一个小编" in service.calls[0][0]
+    assert "禁止向用户提问" in service.calls[0][0]
     assert "不要太死板" in service.calls[0][1]
+    assert "不要索要资料" in service.calls[0][1]
     assert "这场比赛可以先看中场" in result
