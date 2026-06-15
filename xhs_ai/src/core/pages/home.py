@@ -1278,6 +1278,48 @@ class HomePage(QWidget):
         self.parent.update_preview_button("🎯 预览发布", False)
         TipWindow(self.parent, f"❌ 图片处理失败: {error_msg}").show()
 
+    def load_publish_payload(self, payload):
+        """将外部工作流生成的 publish payload 加载到主页预览区。"""
+        try:
+            payload = dict(payload or {})
+            title = str(payload.get("title") or "").strip()
+            content = str(payload.get("content") or "").strip()
+            images = [
+                str(path or "").strip()
+                for path in (payload.get("images") or [])
+                if str(path or "").strip()
+            ]
+            if not title or not content:
+                raise ValueError("payload 的标题或正文为空")
+            if not images:
+                raise ValueError("payload 没有可预览图片")
+
+            self.title_input.setText(title)
+            self.subtitle_input.setPlainText(content)
+            self.input_text.setPlainText(
+                str((payload.get("topic") or {}).get("topic") or title)
+            )
+            self.images = []
+            self.image_list = []
+            self.current_image_index = 0
+            self.image_label.setPixmap(self.placeholder_photo)
+            self.image_title.setText("正在加载世界杯封面...")
+            self.parent.update_preview_button("🎯 预览发布", False)
+
+            self.parent.image_processor = ImageProcessorThread(
+                images[0],
+                images[1:],
+            )
+            self.parent.image_processor.finished.connect(
+                self.handle_image_processing_result
+            )
+            self.parent.image_processor.error.connect(
+                self.handle_image_processing_error
+            )
+            self.parent.image_processor.start()
+        except Exception as exc:
+            TipWindow(self.parent, f"❌ 加载世界杯内容失败: {exc}").show()
+
     def show_current_image(self):
         if not self.image_list:
             self.image_label.setPixmap(self.placeholder_photo)

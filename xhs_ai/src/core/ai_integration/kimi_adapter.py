@@ -6,13 +6,22 @@ from typing import Dict, Optional, List
 class KimiAdapter:
     """Kimi AI图片生成适配器"""
     
-    def __init__(self, api_key: str):
+    def __init__(self, api_key: str, endpoint: str = ""):
         self.api_key = api_key
-        self.base_url = "https://api.moonshot.cn/v1"
+        self.base_url = self._normalize_base_url(
+            endpoint or "https://api.moonshot.cn/v1"
+        )
         self.headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         }
+
+    @staticmethod
+    def _normalize_base_url(endpoint: str) -> str:
+        value = str(endpoint or "").strip().rstrip("/")
+        if value.endswith("/images/generations"):
+            return value[: -len("/images/generations")]
+        return value
     
     def generate_image(self, prompt: str, model: str = "kimi-image", 
                       size: str = "1024x1024", quality: str = "standard") -> Optional[Dict]:

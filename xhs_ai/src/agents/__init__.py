@@ -14,6 +14,7 @@ from src.agents.topic_agent import TopicAgent, TopicDecision
 from src.agents.workflow_agent import ContentWorkflowAgent, HotspotWorkflowRequest
 from src.agents.writer_agent import GeneratedCopy, WriterAgent
 from src.agents.worldcup_workflow_agent import WorldCupWorkflowAgent
+from src.agents.worldcup_copy_agent import WorldCupCopyAgent
 
 __all__ = [
     "AnalyticsAgent",
@@ -32,4 +33,5 @@ __all__ = [
     "TopicDecision",
     "WriterAgent",
     "WorldCupWorkflowAgent",
+    "WorldCupCopyAgent",
 ]

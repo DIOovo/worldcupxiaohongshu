@@ -35,6 +35,9 @@ class CoverAgent:
 
     name = "cover_agent"
 
+    def __init__(self, ai_image_service: Any = None):
+        self.ai_image_service = ai_image_service
+
     def generate_for_post(
         self,
         *,
@@ -44,6 +47,12 @@ class CoverAgent:
         cover_template_id: str = "",
         page_count: int = 3,
         content_pages: Optional[Sequence[str]] = None,
+        image_mode: str = "template",
+        image_provider: str = "",
+        image_model: str = "",
+        image_size: str = "",
+        image_endpoint: str = "",
+        cover_only: bool = False,
     ) -> CoverResult:
         title = str(title or "").strip()
         content = str(content or "").strip()
@@ -54,6 +63,23 @@ class CoverAgent:
         except Exception:
             page_count = 3
         page_count = max(1, page_count)
+        image_mode = str(image_mode or "template").strip().lower()
+
+        if image_mode == "ai":
+            return self._generate_ai_images(
+                title=title or topic,
+                topic=topic,
+                content=content,
+                content_pages=content_pages,
+                page_count=page_count,
+                image_provider=image_provider,
+                image_model=image_model,
+                image_size=image_size,
+                image_endpoint=image_endpoint,
+                cover_only=cover_only,
+            )
+        if image_mode != "template":
+            raise ValueError(f"不支持的图片模式：{image_mode}")
 
         if cover_template_id == "showcase_marketing_poster":
             result = self._generate_marketing_poster(topic=topic)
@@ -65,13 +91,97 @@ class CoverAgent:
             content=content or topic,
             cover_template_id=cover_template_id,
             page_count=page_count,
-            content_pages=content_pages,
+            content_pages=[] if cover_only else content_pages,
+            cover_only=cover_only,
         )
         if images:
             return CoverResult(images=images, source="system_template")
 
-        cover_path, content_paths = self.generate_local_placeholder_images(title or topic, count=max(2, page_count))
-        return CoverResult(images=[cover_path] + list(content_paths or []), source="placeholder")
+        cover_path, content_paths = self.generate_local_placeholder_images(
+            title or topic,
+            count=max(1, page_count),
+        )
+        images = [cover_path] if cover_only else [cover_path] + list(content_paths or [])
+        return CoverResult(images=images, source="placeholder")
+
+    def _generate_ai_images(
+        self,
+        *,
+        title: str,
+        topic: str,
+        content: str,
+        content_pages: Optional[Sequence[str]],
+        page_count: int,
+        image_provider: str,
+        image_model: str,
+        image_size: str,
+        image_endpoint: str,
+        cover_only: bool,
+    ) -> CoverResult:
+        service = self.ai_image_service
+        if service is None:
+            from src.core.services.ai_image_service import ai_image_service
+
+            service = ai_image_service
+
+        pages = [str(item).strip() for item in (content_pages or []) if str(item).strip()]
+        pages = pages[:page_count]
+        if not pages and not cover_only:
+            pages = [content] * page_count
+        prompts = self._build_ai_background_prompts(
+            title=title,
+            topic=topic,
+            pages=pages,
+        )
+        backgrounds = service.generate_backgrounds(
+            prompts,
+            provider=image_provider,
+            model=image_model,
+            size=image_size,
+            endpoint=image_endpoint,
+        )
+        if len(backgrounds) < len(pages) + 1:
+            raise RuntimeError("AI 图片生成失败：返回背景图数量不足")
+
+        images = self._generate_system_template_images(
+            title=title,
+            content=content,
+            cover_template_id="",
+            page_count=page_count,
+            content_pages=pages,
+            cover_bg_image_path=backgrounds[0],
+            content_bg_image_paths=backgrounds[1 : len(pages) + 1],
+            cover_only=cover_only,
+        )
+        if not images:
+            raise RuntimeError("AI 图片生成成功，但文字排版失败")
+        return CoverResult(images=images, source="ai_generated")
+
+    @staticmethod
+    def _build_ai_background_prompts(
+        *,
+        title: str,
+        topic: str,
+        pages: Sequence[str],
+    ) -> List[str]:
+        common = (
+            "世界杯足球主题，小红书竖版海报背景，专业体育数据可视化风格，"
+            "电影感球场灯光，现代、简洁、高级，中央和上方保留大面积干净留白，"
+            "不要文字，不要数字，不要字母，不要水印，不要商标，不要队徽，"
+            "不要国旗，不要球员肖像，避免任何可识别版权素材。"
+        )
+        prompts = [
+            f"{common} 封面氛围，主题是 {topic or title}，强烈赛前对决感。"
+        ]
+        page_styles = [
+            "比赛结论页背景，突出对决与比分区域的视觉层次。",
+            "概率分析页背景，带抽象数据图表、三段式信息区域。",
+            "分析依据页背景，带低对比度战术线条和分析面板氛围。",
+        ]
+        for index, _page in enumerate(pages):
+            style = page_styles[index] if index < len(page_styles) else "足球数据分析内容页背景。"
+            prompts.append(f"{common} {style}")
+        return prompts
 
     def _generate_marketing_poster(self, *, topic: str) -> CoverResult:
         try:
@@ -114,11 +224,14 @@ class CoverAgent:
         cover_template_id: str,
         page_count: int,
         content_pages: Optional[Sequence[str]] = None,
+        cover_bg_image_path: str = "",
+        content_bg_image_paths: Optional[Sequence[str]] = None,
+        cover_only: bool = False,
     ) -> List[str]:
         try:
             from src.core.services.system_image_template_service import system_image_template_service
 
-            cover_bg = ""
+            cover_bg = str(cover_bg_image_path or "").strip()
             try:
                 if cover_template_id:
                     showcase_dir = system_image_template_service.resolve_showcase_dir()
@@ -131,8 +244,9 @@ class CoverAgent:
 
             generated = system_image_template_service.generate_post_images(
                 title=title,
-                content=content,
-                content_pages=content_pages,
+                content="" if cover_only else content,
+                content_pages=[] if cover_only else content_pages,
+                content_bg_image_paths=content_bg_image_paths,
                 page_count=page_count,
                 bg_image_path=cover_bg,
                 cover_bg_image_path=cover_bg,

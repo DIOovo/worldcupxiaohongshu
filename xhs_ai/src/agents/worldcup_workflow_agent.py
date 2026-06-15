@@ -12,6 +12,7 @@ from src.agents.publish_agent import PublishAgent
 from src.agents.rewriter_agent import RewriterAgent
 from src.agents.review_agent import ReviewAgent
 from src.agents.workflow_agent import ContentWorkflowAgent
+from src.agents.worldcup_copy_agent import WorldCupCopyAgent
 from src.integrations.worldcup_report_adapter import (
     WorldCupPostDraft,
     WorldCupReportAdapter,
@@ -29,6 +30,7 @@ class WorldCupWorkflowAgent:
         report_adapter: Any = None,
         review_agent: Any = None,
         rewriter_agent: Any = None,
+        copy_agent: Any = None,
         cover_agent: Any = None,
         publish_agent: Any = None,
         analytics_agent: Any = None,
@@ -36,6 +38,7 @@ class WorldCupWorkflowAgent:
         self.report_adapter = report_adapter or WorldCupReportAdapter()
         self.review_agent = review_agent or ReviewAgent()
         self.rewriter_agent = rewriter_agent or RewriterAgent()
+        self.copy_agent = copy_agent or WorldCupCopyAgent()
         self.cover_agent = cover_agent or CoverAgent()
         self.publish_agent = publish_agent or PublishAgent()
         self.analytics_agent = analytics_agent or AnalyticsAgent()
@@ -44,10 +47,15 @@ class WorldCupWorkflowAgent:
         self,
         report_path: str | Path,
         *,
-        page_count: int = 4,
+        page_count: int = 1,
         min_review_score: int = 85,
         max_rewrite_rounds: int = 1,
         cover_template_id: str = "",
+        image_mode: str = "template",
+        image_provider: str = "",
+        image_model: str = "",
+        image_size: str = "",
+        image_endpoint: str = "",
         output_path: str | Path = "",
     ) -> Dict[str, Any]:
         """读取报告并生成兼容 xhs_ai 的 publish payload。"""
@@ -71,6 +79,34 @@ class WorldCupWorkflowAgent:
             )
         )
         original_draft = self.report_adapter.build_post_draft(report)
+        try:
+            analysis = self.copy_agent.rewrite_analysis(
+                original_draft.protected_facts["home_team"],
+                original_draft.protected_facts["away_team"],
+                original_draft.metadata.get("key_findings") or [],
+            )
+            original_draft = self.report_adapter.apply_humanized_analysis(
+                original_draft,
+                analysis,
+            )
+            steps.append(
+                AgentStep(
+                    getattr(self.copy_agent, "name", "worldcup_copy_agent"),
+                    "rewrite_analysis",
+                    "completed",
+                    "已将赛前分析改写为自然中文表达",
+                )
+            )
+        except Exception as exc:
+            steps.append(
+                AgentStep(
+                    getattr(self.copy_agent, "name", "worldcup_copy_agent"),
+                    "rewrite_analysis",
+                    "fallback",
+                    "赛前分析改写未完成，已使用中文基础文案",
+                    {"error": str(exc)},
+                )
+            )
         title = original_draft.title
         content = original_draft.content
         steps.append(
@@ -148,15 +184,24 @@ class WorldCupWorkflowAgent:
             )
             steps.append(self._review_step(review, round_index=rewrite_rounds))
 
-        total_pages = max(2, int(page_count or 4))
-        content_pages = self.report_adapter.build_image_pages(original_draft)
+        total_pages = max(1, int(page_count or 1))
+        content_page_count = max(0, total_pages - 1)
+        content_pages = self.report_adapter.build_image_pages(original_draft)[
+            :content_page_count
+        ]
         cover = self.cover_agent.generate_for_post(
             title=title,
             content=content,
             topic=original_draft.topic,
             cover_template_id=str(cover_template_id or "").strip(),
-            page_count=max(1, total_pages - 1),
-            content_pages=content_pages[: max(1, total_pages - 1)],
+            page_count=max(1, content_page_count),
+            content_pages=content_pages,
+            cover_only=content_page_count == 0,
+            image_mode=image_mode,
+            image_provider=image_provider,
+            image_model=image_model,
+            image_size=image_size,
+            image_endpoint=image_endpoint,
         )
         images = list(getattr(cover, "images", None) or [])
         steps.append(
@@ -189,6 +234,7 @@ class WorldCupWorkflowAgent:
         payload.update(
             {
                 "source_type": "worldcup_forecast",
+                "image_source": str(getattr(cover, "source", "") or ""),
                 "worldcup_metadata": dict(original_draft.metadata),
             }
         )

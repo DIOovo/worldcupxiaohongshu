@@ -12,6 +12,7 @@ from PyQt5.QtGui import QPixmap
 
 from src.core.alert import TipWindow
 from .database_management import DatabaseManagementPage
+from .worldcup_page import WorldCupPage
 from src.core.ui.qt_font import get_ui_text_font_family_css
 
 
@@ -185,6 +186,10 @@ class ToolsPage(QWidget):
         # 添加数据库管理选项卡
         database_widget = DatabaseManagementPage(self)
         tab_widget.addTab(database_widget, "🛠️ 数据库管理")
+
+        worldcup_widget = WorldCupPage(app_window=self.parent, parent=self)
+        tab_widget.addTab(worldcup_widget, "世界杯")
+        self.worldcup_page = worldcup_widget
 
         # 将选项卡添加到主布局
         layout.addWidget(tab_widget)

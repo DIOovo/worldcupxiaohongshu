@@ -60,6 +60,21 @@ class FakeRewriterAgent:
         )()
 
 
+class FakeCopyAgent:
+    name = "worldcup_copy_agent"
+
+    def __init__(self, result="这场球先看中场节奏，墨西哥状态稍稳，南非的反击也不能忽视。", error=None):
+        self.result = result
+        self.error = error
+        self.calls = []
+
+    def rewrite_analysis(self, home_team, away_team, findings):
+        self.calls.append((home_team, away_team, list(findings)))
+        if self.error:
+            raise self.error
+        return self.result
+
+
 class FakeCoverAgent:
     name = "cover_agent"
 
@@ -73,7 +88,8 @@ class FakeCoverAgent:
 
     def generate_for_post(self, **kwargs):
         self.calls.append(kwargs)
-        return CoverResult(images=self.images, source="fake")
+        images = self.images[:1] if kwargs.get("cover_only") else self.images
+        return CoverResult(images=images, source="fake")
 
 
 class FakePublishAgent:
@@ -111,6 +127,7 @@ def build_workflow(**overrides):
         report_adapter=overrides.get("report_adapter", WorldCupReportAdapter()),
         review_agent=overrides.get("review_agent", FakeReviewAgent()),
         rewriter_agent=overrides.get("rewriter_agent", FakeRewriterAgent()),
+        copy_agent=overrides.get("copy_agent", FakeCopyAgent()),
         cover_agent=overrides.get("cover_agent", FakeCoverAgent()),
         publish_agent=overrides.get("publish_agent", FakePublishAgent()),
         analytics_agent=overrides.get("analytics_agent", FakeAnalyticsAgent()),
@@ -123,6 +140,26 @@ def test_review_passes_without_rewrite():
     assert payload["review"]["passed"] is True
     assert payload["rewrite_rounds"] == 0
     assert rewriter.calls == 0
+
+
+def test_analysis_is_humanized_once():
+    copy_agent = FakeCopyAgent()
+    payload = build_workflow(copy_agent=copy_agent).build_publish_payload(FIXTURE)
+    assert len(copy_agent.calls) == 1
+    assert "先看中场节奏" in payload["content"]
+    assert "AI" not in payload["content"]
+    assert "模型" not in payload["content"]
+    assert "个人预测请勿当真。" in payload["content"]
+
+
+def test_analysis_falls_back_when_humanizing_fails():
+    copy_agent = FakeCopyAgent(error=RuntimeError("服务暂不可用"))
+    payload = build_workflow(copy_agent=copy_agent).build_publish_payload(FIXTURE)
+    assert "墨西哥近期状态更稳定" in payload["content"]
+    assert any(
+        step["action"] == "rewrite_analysis" and step["status"] == "fallback"
+        for step in payload["agent_steps"]
+    )
 
 
 def test_low_score_is_rewritten_and_reviewed_again():
@@ -162,16 +199,45 @@ def test_empty_cover_images_raise_error():
         )
 
 
-def test_publish_payload_has_worldcup_schema_and_four_pages():
+def test_publish_payload_defaults_to_one_cover_image():
     cover = FakeCoverAgent()
     payload = build_workflow(cover_agent=cover).build_publish_payload(FIXTURE)
     assert payload["schema"] == "xhs_ai.publish_payload.v1"
     assert payload["platform"] == "xiaohongshu"
     assert payload["source_type"] == "worldcup_forecast"
     assert payload["worldcup_metadata"]["home_win_probability"] == 0.55
-    assert len(payload["images"]) == 4
+    assert len(payload["images"]) == 1
+    assert cover.calls[0]["content_pages"] == []
+    assert cover.calls[0]["page_count"] == 1
+    assert cover.calls[0]["cover_only"] is True
+    assert "【赛前看法】" in payload["content"]
+    assert "【风险提示】" in payload["content"]
+
+
+def test_page_count_four_still_builds_three_content_pages():
+    cover = FakeCoverAgent()
+    build_workflow(cover_agent=cover).build_publish_payload(FIXTURE, page_count=4)
     assert len(cover.calls[0]["content_pages"]) == 3
     assert cover.calls[0]["page_count"] == 3
+    assert cover.calls[0]["cover_only"] is False
+
+
+def test_ai_image_options_are_forwarded_to_cover_agent():
+    cover = FakeCoverAgent()
+    payload = build_workflow(cover_agent=cover).build_publish_payload(
+        FIXTURE,
+        image_mode="ai",
+        image_provider="qwen",
+        image_model="wanx-v1",
+        image_size="1024*1024",
+        image_endpoint="https://example.com/v1",
+    )
+    assert cover.calls[0]["image_mode"] == "ai"
+    assert cover.calls[0]["image_provider"] == "qwen"
+    assert cover.calls[0]["image_model"] == "wanx-v1"
+    assert cover.calls[0]["image_size"] == "1024*1024"
+    assert cover.calls[0]["image_endpoint"] == "https://example.com/v1"
+    assert payload["image_source"] == "fake"
 
 
 def test_writes_utf8_publish_json(tmp_path):

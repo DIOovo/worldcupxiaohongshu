@@ -22,10 +22,34 @@ def build_parser() -> argparse.ArgumentParser:
         default="output/worldcup_publish.json",
         help="publish JSON 输出路径",
     )
-    parser.add_argument("--page-count", type=int, default=4, help="图片总页数")
+    parser.add_argument(
+        "--page-count",
+        type=int,
+        default=1,
+        help="图片总页数，默认仅生成一张封面",
+    )
     parser.add_argument("--min-review-score", type=int, default=85)
     parser.add_argument("--max-rewrite-rounds", type=int, default=1)
     parser.add_argument("--cover-template-id", default="")
+    parser.add_argument(
+        "--image-mode",
+        choices=("template", "ai"),
+        default="template",
+        help="template 使用本地模板；ai 使用大模型生成背景",
+    )
+    parser.add_argument(
+        "--image-provider",
+        choices=("qwen", "kimi", "custom", "anthropic", "deepseek", "openai"),
+        default="",
+        help="AI 图片提供商",
+    )
+    parser.add_argument("--image-model", default="", help="图片模型名称")
+    parser.add_argument("--image-size", default="", help="模型图片尺寸")
+    parser.add_argument(
+        "--image-endpoint",
+        default="",
+        help="自定义 OpenAI Images 兼容接口地址",
+    )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--build-only", action="store_true", help="仅构建，不打开浏览器")
     mode.add_argument("--preview", action="store_true", help="填充页面但不点击最终发布")
@@ -66,6 +90,11 @@ def run(
         min_review_score=args.min_review_score,
         max_rewrite_rounds=args.max_rewrite_rounds,
         cover_template_id=args.cover_template_id,
+        image_mode=args.image_mode,
+        image_provider=args.image_provider,
+        image_model=args.image_model,
+        image_size=args.image_size,
+        image_endpoint=args.image_endpoint,
         output_path=args.output,
     )
     if args.preview or args.publish:

@@ -1702,6 +1702,7 @@ class SystemImageTemplateService:
         title: str,
         content: str,
         content_pages: Optional[Sequence[str]] = None,
+        content_bg_image_paths: Optional[Sequence[str]] = None,
         pack_id: str = "",
         page_count: int = 3,
         target_size: Tuple[int, int] = (1080, 1440),
@@ -1715,6 +1716,7 @@ class SystemImageTemplateService:
 
         bg_override: Optional[Path] = None
         cover_override: Optional[Path] = None
+        content_bg_overrides: List[Optional[Path]] = []
         try:
             candidate = Path(os.path.expanduser(str(bg_image_path or "").strip()))
             if candidate.exists() and candidate.is_file():
@@ -1729,13 +1731,22 @@ class SystemImageTemplateService:
         except Exception:
             cover_override = None
 
+        for raw_path in content_bg_image_paths or []:
+            try:
+                candidate = Path(os.path.expanduser(str(raw_path or "").strip()))
+                content_bg_overrides.append(
+                    candidate if candidate.exists() and candidate.is_file() else None
+                )
+            except Exception:
+                content_bg_overrides.append(None)
+
         # 兼容旧参数：若只传了 bg_image_path，则封面也使用该背景
         if not cover_override and bg_override:
             cover_override = bg_override
 
         pack: Optional[ContentPack] = None
         # 内容页：只有在未指定 bg_override 时才使用模板包
-        if not bg_override:
+        if not bg_override and not content_bg_overrides:
             pack = self.choose_pack(pack_id or self.get_selected_pack_id())
 
         raw_pages = [str(x) for x in (content_pages or []) if str(x).strip()]
@@ -1833,7 +1844,9 @@ class SystemImageTemplateService:
 
         content_paths: List[str] = []
         for idx, page_text in enumerate(pages):
-            if bg_override:
+            if idx < len(content_bg_overrides) and content_bg_overrides[idx]:
+                bg_path = content_bg_overrides[idx]
+            elif bg_override:
                 bg_path = bg_override
             elif pack and pack.pages:
                 bg_index = min(idx + 1, len(pack.pages) - 1) if pack and len(pack.pages) > 1 else 0

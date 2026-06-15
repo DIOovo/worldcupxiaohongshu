@@ -26,6 +26,57 @@ def test_loads_report_with_real_production_structure():
     assert report["consensus"]["match_predictions"][0]["home_goals"] == 2
 
 
+def test_normalizes_match_prediction_report_schema(tmp_path):
+    path = tmp_path / "real-report.json"
+    path.write_text(
+        json.dumps(
+            {
+                "schema_version": "1.0",
+                "report_type": "world_cup_match_prediction",
+                "generated_at": "2026-06-14T15:45:36+08:00",
+                "match": {
+                    "match_id": "wc2026_009",
+                    "prediction_date": "2026-06-15",
+                    "kickoff_time": None,
+                    "home_team": "Belgium",
+                    "away_team": "Egypt",
+                    "stage": "Group Stage",
+                },
+                "prediction": {
+                    "predicted_home_score": 2,
+                    "predicted_away_score": 0,
+                    "home_win_probability": 0.74614,
+                    "draw_probability": 0.156723,
+                    "away_win_probability": 0.097136,
+                },
+                "model_details": {
+                    "model": "test-model",
+                    "adjustment_reasons": ["历史数据支持主队占优"],
+                },
+                "team_features": {
+                    "home": {"team": "Belgium"},
+                    "away": {"team": "Egypt"},
+                },
+                "weather": None,
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    report = WorldCupReportAdapter().load_report(path)
+    draft = WorldCupReportAdapter().build_post_draft(report)
+    assert report["fixture"]["home_team"] == "Belgium"
+    assert draft.protected_facts["home_goals"] == 2
+    assert draft.protected_facts["away_goals"] == 0
+    assert draft.protected_facts["home_win_probability"] == 0.74614
+    assert draft.protected_facts["home_team"] == "比利时"
+    assert draft.protected_facts["away_team"] == "埃及"
+    assert draft.protected_facts["stage"] == "小组赛"
+    assert "Belgium" not in draft.content
+    assert "Egypt" not in draft.content
+    assert "具体开球时间未提供" in draft.content
+
+
 def test_missing_file_raises_clear_error(tmp_path):
     with pytest.raises(FileNotFoundError, match="世界杯报告不存在"):
         WorldCupReportAdapter().load_report(tmp_path / "missing.json")
@@ -110,6 +161,9 @@ def test_disclaimer_and_required_tags_are_present():
     draft = WorldCupReportAdapter().build_post_draft(load_fixture())
     assert DISCLAIMER in draft.content
     assert all(tag in draft.content for tag in REQUIRED_TAGS)
+    assert "AI" not in draft.content
+    assert "模型" not in draft.content
+    assert "Agent" not in draft.content
 
 
 def test_protected_fact_validation_detects_score_and_probability_changes():
@@ -135,7 +189,7 @@ def test_protected_fact_validation_rejects_new_unreported_claims():
     assert not adapter.validate_protected_facts(draft, draft.title, rewritten)
     assert not adapter.validate_protected_facts(
         draft,
-        "巴西vs南非 世界杯AI预测",
+        "巴西对阵南非世界杯预测",
         draft.content,
     )
     assert not adapter.validate_protected_facts(
@@ -143,3 +197,22 @@ def test_protected_fact_validation_rejects_new_unreported_claims():
         draft.title,
         draft.content + "\n墨西哥必胜。",
     )
+
+
+def test_applies_humanized_analysis_without_changing_protected_facts():
+    adapter = WorldCupReportAdapter()
+    draft = adapter.build_post_draft(load_fixture())
+    rewritten = adapter.apply_humanized_analysis(
+        draft,
+        "这场球更值得留意中场节奏，墨西哥整体状态稍稳，但南非的快速反击也可能带来变化。",
+    )
+    assert "更值得留意中场节奏" in rewritten.content
+    assert adapter.validate_protected_facts(rewritten, rewritten.title, rewritten.content)
+
+
+@pytest.mark.parametrize("text", ["这是AI分析。", "墨西哥必胜。", "Use this result."])
+def test_rejects_unsafe_humanized_analysis(text):
+    adapter = WorldCupReportAdapter()
+    draft = adapter.build_post_draft(load_fixture())
+    with pytest.raises(ValueError):
+        adapter.apply_humanized_analysis(draft, text)

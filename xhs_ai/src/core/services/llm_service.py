@@ -255,6 +255,33 @@ class LLMService:
 
         return True, ""
 
+    def generate_text(self, system_prompt: str, user_prompt: str) -> str:
+        """使用当前文本模型生成一段纯文本。"""
+
+        try:
+            self.config.load_config()
+        except Exception:
+            pass
+
+        model_config = self._apply_env_model_config_overrides(
+            self.config.get_model_config()
+        )
+        ok, reason = self.is_model_configured(model_config)
+        if not ok:
+            raise LLMServiceError(f"模型配置不可用: {reason}")
+
+        messages: List[Dict[str, str]] = []
+        configured_system = str(model_config.get("system_prompt") or "").strip()
+        merged_system = "\n\n".join(
+            text
+            for text in (configured_system, str(system_prompt or "").strip())
+            if text
+        )
+        if merged_system:
+            messages.append({"role": "system", "content": merged_system})
+        messages.append({"role": "user", "content": str(user_prompt or "").strip()})
+        return self._call_model(model_config, messages).strip()
+
     def generate_xiaohongshu_content(
         self,
         topic: str,
