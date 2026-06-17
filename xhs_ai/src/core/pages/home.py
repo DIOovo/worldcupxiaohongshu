@@ -3,7 +3,7 @@ import time
 
 from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtGui import QColor, QPixmap, QDesktopServices
-from PyQt5.QtWidgets import (QFrame, QHBoxLayout, QLabel, QLineEdit,
+from PyQt5.QtWidgets import (QCheckBox, QFrame, QHBoxLayout, QLabel, QLineEdit,
                              QPushButton, QTextEdit, QVBoxLayout, QWidget, QMessageBox, QComboBox, QFileDialog, QInputDialog)
 
 import os
@@ -601,6 +601,20 @@ class HomePage(QWidget):
         preview_btn.setEnabled(False)
         preview_layout.addWidget(
             preview_btn, alignment=Qt.AlignCenter)
+
+        self.auto_publish_checkbox = QCheckBox("自动点击最终发布")
+        self.auto_publish_checkbox.setChecked(False)
+        self.auto_publish_checkbox.setToolTip(
+            "默认关闭：只填充发布页并停在预览/确认阶段；开启后会尝试点击最终发布按钮"
+        )
+        self.auto_publish_checkbox.setStyleSheet("""
+            QCheckBox {
+                color: #e74c3c;
+                font-size: 10.5pt;
+                margin-top: 6px;
+            }
+        """)
+        preview_layout.addWidget(self.auto_publish_checkbox, alignment=Qt.AlignCenter)
 
         # 添加定时发布按钮
         self.schedule_btn = QPushButton("⏰ 定时发布")
@@ -1380,16 +1394,22 @@ class HomePage(QWidget):
 
             title = self.title_input.text()
             content = self.subtitle_input.toPlainText()
+            auto_publish = bool(
+                getattr(self, "auto_publish_checkbox", None)
+                and self.auto_publish_checkbox.isChecked()
+            )
 
             # 更新预览按钮状态
-            self.parent.update_preview_button("⏳ 发布中...", False)
+            button_text = "⏳ 自动发布中..." if auto_publish else "⏳ 发布中..."
+            self.parent.update_preview_button(button_text, False)
 
             # 添加预览任务到浏览器线程
             self.parent.browser_thread.action_queue.append({
                 'type': 'preview',
                 'title': title,
                 'content': content,
-                'images': self.images
+                'images': self.images,
+                'auto_publish': auto_publish,
             })
 
         except Exception as e:

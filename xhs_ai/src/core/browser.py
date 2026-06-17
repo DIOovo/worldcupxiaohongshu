@@ -131,6 +131,7 @@ class BrowserThread(QThread):
 
                         self.login_success.emit(self.poster)
                     elif action['type'] == 'preview' and self.poster:
+                        auto_publish = bool(action.get("auto_publish", False))
                         await ContentWorkflowAgent().publish_payload(
                             self.poster,
                             {
@@ -138,7 +139,7 @@ class BrowserThread(QThread):
                                 "content": action['content'],
                                 "images": action['images'],
                             },
-                            auto_publish=False,
+                            auto_publish=auto_publish,
                             record_analytics=False,
                         )
                         self.preview_success.emit()
