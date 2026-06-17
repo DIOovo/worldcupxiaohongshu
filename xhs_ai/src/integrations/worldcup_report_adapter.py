@@ -8,12 +8,13 @@ import json
 from pathlib import Path
 import re
 from typing import Any, Dict, Iterable, List
+from decimal import Decimal, ROUND_HALF_UP
 
-
-DISCLAIMER = "个人预测请勿当真。"
+DISCLAIMER = ""
 REQUIRED_TAGS = ["#世界杯", "#世界杯预测", "#足球", "#赛前预测", "#比赛分析"]
+
 FACT_BLOCK_START = "【预测事实】"
-FACT_BLOCK_END = "【事实结束】"
+FACT_BLOCK_END = ""
 
 TEAM_NAMES = {
     "Mexico": "墨西哥",
@@ -346,11 +347,9 @@ class WorldCupReportAdapter:
             fact_block,
             "【赛前看法】\n"
             + "\n".join(f"{index}. {item}" for index, item in enumerate(basis_lines, 1)),
-            f"【数据状态】\n数据完整度：{float(completeness):.0%}\n"
-            + "\n".join(f"- {item}" for item in warning_lines),
-            "【风险提示】\n比分预测具有高方差，请结合临场阵容和比赛进程理性参考。",
-            DISCLAIMER,
-            " ".join(REQUIRED_TAGS),
+            # f"【数据状态】\n数据完整度：{float(completeness):.0%}\n"
+            # + "\n".join(f"- {item}" for item in warning_lines),
+            "【叠甲】\n只是个人看法。",
         ]
         metadata = {
             **protected_facts,
@@ -361,7 +360,8 @@ class WorldCupReportAdapter:
             "source_report": dict(report.get("_source_report") or {}),
         }
         return WorldCupPostDraft(
-            title=f"{home}对阵{away}赛前预测"[:20],
+            # title=f"{home}对阵{away}赛前预测"[:20],
+            title = f"{home}能赢吗",
             content="\n\n".join(content_parts),
             topic=f"{home}对阵{away}世界杯预测",
             metadata=metadata,
@@ -479,8 +479,8 @@ class WorldCupReportAdapter:
                 [
                     "# 分析依据",
                     *[f"{index}. {item}" for index, item in enumerate(findings, 1)],
-                    f"综合意见一致率：{self._format_optional_percent(facts['agreement_score'])}",
-                    f"风险提示：{risk}",
+                    # f"综合意见一致率：{self._format_optional_percent(facts['agreement_score'])}",
+                    # f"风险提示：{risk}",
                 ]
             ),
         ]
@@ -489,6 +489,7 @@ class WorldCupReportAdapter:
         result_label = "平局" if facts["predicted_result"] == "平局" else facts["predicted_result"]
         return "\n".join(
             [
+                f"{facts['predicted_result']}能赢吗",
                 FACT_BLOCK_START,
                 f"比赛：{facts['home_team']}对阵{facts['away_team']}",
                 f"阶段：{facts['stage']}",
@@ -498,8 +499,8 @@ class WorldCupReportAdapter:
                 f"主胜概率：{self._format_percent(facts['home_win_probability'])}",
                 f"平局概率：{self._format_percent(facts['draw_probability'])}",
                 f"客胜概率：{self._format_percent(facts['away_win_probability'])}",
-                f"综合意见一致率：{self._format_optional_percent(facts['agreement_score'])}",
-                f"参考分析数量：{facts['agent_count'] if facts['agent_count'] is not None else '未知'}",
+                # f"综合意见一致率：{self._format_optional_percent(facts['agreement_score'])}",
+                # f"参考分析数量：{facts['agent_count'] if facts['agent_count'] is not None else '未知'}",
                 FACT_BLOCK_END,
             ]
         )
@@ -683,10 +684,10 @@ class WorldCupReportAdapter:
         if home_elo is not None and away_elo is not None:
             difference = home_elo - away_elo
             leader = home_team if difference >= 0 else away_team
-            findings.append(
-                f"实力评分方面，{home_team}约为{home_elo:.0f}分，"
-                f"{away_team}约为{away_elo:.0f}分，{leader}高出约{abs(difference):.0f}分"
-            )
+            # findings.append(
+            #     f"实力评分方面，{home_team}约为{home_elo:.0f}分，"
+            #     f"{away_team}约为{away_elo:.0f}分，{leader}高出约{abs(difference):.0f}分"
+            # )
 
         home_form = self._format_recent_form(home, home_team, window=5)
         away_form = self._format_recent_form(away, away_team, window=5)
@@ -826,12 +827,22 @@ class WorldCupReportAdapter:
 
     @staticmethod
     def _format_percent(value: Any) -> str:
+        if value is None:
+            return "0%"
+
+        # 1. 将输入转换为 Decimal 高精度对象
         decimal_value = Decimal(str(value))
+
+        # 2. 乘以 100 变成百分比数值
         percent = decimal_value * Decimal("100")
-        text = format(percent.normalize(), "f")
-        if "." not in text:
-            text += ".0"
-        return f"{text}%"
+
+        # 3. 🌟 关键：使用 QUANTIZE（量化）功能进行标准的四舍五入并抹去小数位
+        #    Decimal("1") 意思是保留到个位数（0位小数）
+        #    ROUND_HALF_UP 是最标准的四舍五入规则（5就进位）
+        rounded_percent = percent.quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+
+        # 4. 直接输出
+        return f"{rounded_percent}%"
 
     @classmethod
     def _format_optional_percent(cls, value: Any) -> str:
