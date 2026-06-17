@@ -1,7 +1,4 @@
 ﻿match_id,prediction_date,kickoff_time,home_team,away_team,tournament,stage,group,neutral,status
-537391,2026-06-17,2026-06-17 03:00:00+0800,France,Senegal,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
-537392,2026-06-17,2026-06-17 06:00:00+0800,Iraq,Norway,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
-537397,2026-06-17,2026-06-17 09:00:00+0800,Argentina,Algeria,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
 537398,2026-06-17,2026-06-17 12:00:00+0800,Austria,Jordan,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
 537403,2026-06-18,2026-06-18 01:00:00+0800,Portugal,DR Congo,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
 537409,2026-06-18,2026-06-18 04:00:00+0800,England,Croatia,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED

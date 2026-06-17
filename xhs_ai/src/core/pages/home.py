@@ -1320,6 +1320,29 @@ class HomePage(QWidget):
         except Exception as exc:
             TipWindow(self.parent, f"❌ 加载世界杯内容失败: {exc}").show()
 
+    def generate_from_worldcup_payload(self, payload):
+        """将世界杯素材放入首页输入框，并复用首页生成内容流程二次加工。"""
+        try:
+            payload = dict(payload or {})
+            title = str(payload.get("title") or "").strip()
+            content = str(payload.get("content") or "").strip()
+            if not title or not content:
+                raise ValueError("世界杯内容的标题或正文为空")
+
+            source_text = "\n\n".join(
+                [
+                    "请基于下面这份世界杯赛前预测素材，重新生成一篇适合小红书发布的中文内容。",
+                    "要求：保留比赛、比分、概率等关键事实；不要编造伤停、首发、赔率；语气自然一点。",
+                    f"标题：{title}",
+                    f"正文：\n{content}",
+                ]
+            )
+            self.input_text.setPlainText(source_text)
+            self.generate_content()
+            TipWindow(self.parent, "✅ 已送入首页生成内容，正在二次加工").show()
+        except Exception as exc:
+            TipWindow(self.parent, f"❌ 世界杯内容二次生成失败: {exc}").show()
+
     def show_current_image(self):
         if not self.image_list:
             self.image_label.setPixmap(self.placeholder_photo)

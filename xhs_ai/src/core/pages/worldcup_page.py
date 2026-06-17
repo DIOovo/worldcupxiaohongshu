@@ -386,7 +386,11 @@ class WorldCupPage(QWidget):
         if home_page is None:
             QMessageBox.warning(self, "无法预览", "未找到主页实例")
             return
-        home_page.load_publish_payload(self.current_payload)
         if hasattr(self.app_window, "switch_page"):
             self.app_window.switch_page(0)
-        TipWindow(self.app_window, "已送到主页，可登录后预览发布").show()
+        if hasattr(home_page, "generate_from_worldcup_payload"):
+            home_page.generate_from_worldcup_payload(self.current_payload)
+            TipWindow(self.app_window, "已送到主页并开始二次生成").show()
+        else:
+            home_page.load_publish_payload(self.current_payload)
+            TipWindow(self.app_window, "已送到主页，可登录后预览发布").show()

@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-17T09:53:38.052386+08:00",
+  "match": {
+    "match_id": "537397",
+    "prediction_date": "2026-06-17",
+    "kickoff_time": "2026-06-17 09:00:00+0800",
+    "home_team": "Argentina",
+    "away_team": "Algeria",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": "GROUP_J",
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "HOME_WIN",
+    "predicted_scoreline": "1-1",
+    "predicted_home_score": 1,
+    "predicted_away_score": 1,
+    "scoreline_probability": 0.104484,
+    "home_win_probability": 0.572593,
+    "draw_probability": 0.221993,
+    "away_win_probability": 0.205414,
+    "expected_home_goals": 1.8993,
+    "expected_away_goals": 1.047,
+    "expected_total_goals": 2.9463,
+    "over_2_5_probability": 0.5646,
+    "under_2_5_probability": 0.4354,
+    "both_teams_score_probability": 0.551855,
+    "top_scorelines": [
+      {
+        "home_score": 1,
+        "away_score": 1,
+        "scoreline": "1-1",
+        "result": "DRAW",
+        "probability": 0.104484
+      },
+      {
+        "home_score": 1,
+        "away_score": 0,
+        "scoreline": "1-0",
+        "result": "HOME_WIN",
+        "probability": 0.099794
+      },
+      {
+        "home_score": 2,
+        "away_score": 1,
+        "scoreline": "2-1",
+        "result": "HOME_WIN",
+        "probability": 0.099223
+      },
+      {
+        "home_score": 2,
+        "away_score": 0,
+        "scoreline": "2-0",
+        "result": "HOME_WIN",
+        "probability": 0.094769
+      },
+      {
+        "home_score": 3,
+        "away_score": 1,
+        "scoreline": "3-1",
+        "result": "HOME_WIN",
+        "probability": 0.062818
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 1.8993,
+    "base_away_expected_goals": 1.047,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.05,
+    "adjustment_reasons": [
+      "基础公式已充分纳入Elo差异（209.69）和最近表现数据",
+      "无额外信息（天气、伤停、首发）提供修正依据",
+      "中立场地，不存在主队额外优势",
+      "基础预期进球与两队近期表现指标相符"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Argentina",
+      "normalized_team": "Argentina",
+      "latest_finished_match_date": "2026-06-09",
+      "elo": 2008.318563,
+      "total_historical_matches": 1069,
+      "rest_days": 8,
+      "matches_5": 5,
+      "win_rate_5": 1.0,
+      "draw_rate_5": 0.0,
+      "loss_rate_5": 0.0,
+      "avg_goals_for_5": 2.8,
+      "avg_goals_against_5": 0.2,
+      "avg_goal_difference_5": 2.6,
+      "avg_points_5": 3.0,
+      "clean_sheet_rate_5": 0.8,
+      "scoring_rate_5": 1.0,
+      "matches_10": 10,
+      "win_rate_10": 0.8,
+      "draw_rate_10": 0.1,
+      "loss_rate_10": 0.1,
+      "avg_goals_for_10": 2.5,
+      "avg_goals_against_10": 0.3,
+      "avg_goal_difference_10": 2.2,
+      "avg_points_10": 2.5,
+      "clean_sheet_rate_10": 0.7,
+      "scoring_rate_10": 0.9
+    },
+    "away": {
+      "team": "Algeria",
+      "normalized_team": "Algeria",
+      "latest_finished_match_date": "2026-06-10",
+      "elo": 1798.624741,
+      "total_historical_matches": 617,
+      "rest_days": 7,
+      "matches_5": 5,
+      "win_rate_5": 0.6,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.2,
+      "avg_goals_for_5": 2.4,
+      "avg_goals_against_5": 0.4,
+      "avg_goal_difference_5": 2.0,
+      "avg_points_5": 2.0,
+      "clean_sheet_rate_5": 0.8,
+      "scoring_rate_5": 0.6,
+      "matches_10": 10,
+      "win_rate_10": 0.7,
+      "draw_rate_10": 0.2,
+      "loss_rate_10": 0.1,
+      "avg_goals_for_10": 2.1,
+      "avg_goals_against_10": 0.4,
+      "avg_goal_difference_10": 1.7,
+      "avg_points_10": 2.3,
+      "clean_sheet_rate_10": 0.7,
+      "scoring_rate_10": 0.8
+    },
+    "differences": {
+      "elo_difference": 209.6938,
+      "win_rate_5_difference": 0.4,
+      "win_rate_10_difference": 0.1,
+      "avg_points_5_difference": 1.0,
+      "avg_goals_for_5_difference": 0.4,
+      "avg_goals_against_5_difference": -0.2,
+      "rest_days_difference": 1
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Argentina vs Algeria：模型预测比分 1-1",
+    "summary": "模型预测Argentina 1-1 Algeria。主胜概率57.3%，平局概率22.2%，客胜概率20.5%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}

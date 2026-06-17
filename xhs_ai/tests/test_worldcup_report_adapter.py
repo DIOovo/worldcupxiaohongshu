@@ -184,6 +184,13 @@ def test_key_findings_are_deduplicated_and_limited_to_three():
     ]
 
 
+def test_kickoff_timezone_suffix_is_hidden():
+    draft = WorldCupReportAdapter().build_post_draft(load_fixture())
+    assert "开球时间：2026-06-12 19:00:00" in draft.content
+    assert "+08:00" not in draft.content
+    assert draft.protected_facts["kickoff"] == "2026-06-12 19:00:00"
+
+
 def test_disclaimer_and_required_tags_are_present():
     draft = WorldCupReportAdapter().build_post_draft(load_fixture())
     assert DISCLAIMER in draft.content

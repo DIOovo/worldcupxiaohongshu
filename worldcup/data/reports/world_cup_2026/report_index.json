@@ -1,15 +1,15 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-06-16T16:04:23.268680+08:00",
+  "generated_at": "2026-06-17T10:06:22.902663+08:00",
   "report_count": 1,
   "reports": [
     {
-      "match_id": "537391",
-      "home_team": "France",
-      "away_team": "Senegal",
+      "match_id": "537398",
+      "home_team": "Austria",
+      "away_team": "Jordan",
       "prediction_date": "2026-06-17",
-      "predicted_scoreline": "2-1",
-      "report_file": "/Users/gaoheyang/Desktop/worldcupxiaohongshu/worldcup/data/reports/world_cup_2026/2026-06-17_france_vs_senegal.json",
+      "predicted_scoreline": "2-0",
+      "report_file": "/Users/gaoheyang/Desktop/worldcupxiaohongshu/worldcup/data/reports/world_cup_2026/2026-06-17_austria_vs_jordan.json",
       "status": "SUCCESS"
     }
   ]

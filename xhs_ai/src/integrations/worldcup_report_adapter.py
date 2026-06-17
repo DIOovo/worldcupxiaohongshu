@@ -316,7 +316,7 @@ class WorldCupReportAdapter:
             for item in self._string_list(consensus.get("warnings"))
         ]
         completeness, data_notes = self._data_completeness(report.get("intelligence"))
-        kickoff = str(fixture["kickoff"]).strip().replace("T", " ")
+        kickoff = self._format_kickoff_for_display(fixture["kickoff"])
         stage = STAGE_NAMES.get(
             str(fixture["stage"]).strip(), str(fixture["stage"]).strip()
         )
@@ -566,6 +566,11 @@ class WorldCupReportAdapter:
             }
         except (ValueError, InvalidOperation):
             return None
+
+    @staticmethod
+    def _format_kickoff_for_display(value: Any) -> str:
+        text = str(value or "").strip().replace("T", " ")
+        return re.sub(r"\s*(?:[+-]\d{2}:?\d{2}|Z)$", "", text).strip()
 
     @staticmethod
     def _require_dict(

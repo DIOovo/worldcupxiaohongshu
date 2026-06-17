@@ -188,11 +188,15 @@ class SystemImageTemplateService:
         results.sort(key=lambda t: (t.get("style") or "", t.get("theme") or "", t.get("id") or ""))
         return results
 
+    @staticmethod
+    def _has_showcase_images(directory: Path) -> bool:
+        return any(path.is_file() and path.stat().st_size > 0 for path in directory.glob("*.png"))
+
     def resolve_showcase_dir(self) -> Optional[Path]:
         """解析 showcase 模板目录（优先项目内置模板）。"""
         repo_root = self._get_repo_root()
         bundled = repo_root / "assets" / "system_templates" / "template_showcase"
-        if bundled.exists() and bundled.is_dir() and any(bundled.glob("showcase_*.png")):
+        if bundled.exists() and bundled.is_dir() and self._has_showcase_images(bundled):
             return bundled
 
         base_dir = self.resolve_templates_dir()
@@ -202,7 +206,7 @@ class SystemImageTemplateService:
                 return candidate
 
             # 兼容旧结构：showcase 直接放在 output/templates
-            if any(base_dir.glob("showcase_*.png")):
+            if self._has_showcase_images(base_dir):
                 return base_dir
 
         candidates = [
@@ -211,7 +215,7 @@ class SystemImageTemplateService:
         ]
         for c in candidates:
             if c.exists() and c.is_dir():
-                if c.name == "template_showcase" or any(c.glob("showcase_*.png")):
+                if c.name == "template_showcase" or self._has_showcase_images(c):
                     return c
 
         return None
@@ -261,7 +265,7 @@ class SystemImageTemplateService:
         return "·".join(label_parts) if label_parts else variant
 
     def list_showcase_templates(self) -> List[Dict[str, str]]:
-        """列出 x-auto-publisher 的 showcase 模板（showcase_*.png）。"""
+        """列出 showcase 模板目录中的 PNG 模板。"""
         showcase_dir = self.resolve_showcase_dir()
         if not showcase_dir:
             return []
@@ -298,7 +302,7 @@ class SystemImageTemplateService:
         base_ids = sorted(id_to_meta.keys(), key=len, reverse=True)
 
         results: List[Dict[str, str]] = []
-        for path in sorted(showcase_dir.glob("showcase_*.png")):
+        for path in sorted(showcase_dir.glob("*.png")):
             try:
                 if not path.is_file():
                     continue
