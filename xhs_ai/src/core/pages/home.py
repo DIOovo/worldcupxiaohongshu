@@ -1041,17 +1041,32 @@ class HomePage(QWidget):
                 TipWindow(self.parent, "❌ 请输入手机号").show()
                 return
 
+            browser_thread = getattr(self.parent, "browser_thread", None)
+            if not browser_thread:
+                TipWindow(self.parent, "❌ 浏览器线程未启动").show()
+                return
+
+            if getattr(browser_thread, "login_in_progress", False):
+                TipWindow(self.parent, "⏳ 登录正在进行，请不要重复点击").show()
+                return
+
             # 更新登录按钮状态
             self.parent.update_login_button("⏳ 登录中...", False)
 
             # 添加登录任务到浏览器线程
-            self.parent.browser_thread.action_queue.append({
-                'type': 'login',
-                'phone': phone,
-                'country_code': self.get_country_code(),
-            })
+            if hasattr(browser_thread, "enqueue_login"):
+                queued = browser_thread.enqueue_login(phone, self.get_country_code())
+            else:
+                queued = False
+            if not queued:
+                self.parent.update_login_button("⏳ 登录中...", False)
+                TipWindow(self.parent, "⏳ 登录任务已在队列中").show()
 
         except Exception as e:
+            try:
+                self.parent.update_login_button("🚀 登录", True)
+            except Exception:
+                pass
             TipWindow(self.parent, f"❌ 登录失败: {str(e)}").show()
 
     def handle_login_error(self, error_msg):

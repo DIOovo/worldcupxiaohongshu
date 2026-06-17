@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0",
+  "report_type": "world_cup_match_prediction",
+  "generated_at": "2026-06-17T17:18:09.202675+08:00",
+  "match": {
+    "match_id": "537403",
+    "prediction_date": "2026-06-18",
+    "kickoff_time": "2026-06-18 01:00:00+0800",
+    "home_team": "Portugal",
+    "away_team": "DR Congo",
+    "tournament": "FIFA World Cup",
+    "stage": "Group Stage",
+    "group": "GROUP_K",
+    "neutral": true
+  },
+  "prediction": {
+    "predicted_result": "HOME_WIN",
+    "predicted_scoreline": "2-0",
+    "predicted_home_score": 2,
+    "predicted_away_score": 0,
+    "scoreline_probability": 0.150559,
+    "home_win_probability": 0.714043,
+    "draw_probability": 0.189761,
+    "away_win_probability": 0.096196,
+    "expected_home_goals": 2.0293,
+    "expected_away_goals": 0.5866,
+    "expected_total_goals": 2.6159,
+    "over_2_5_probability": 0.485419,
+    "under_2_5_probability": 0.514581,
+    "both_teams_score_probability": 0.385444,
+    "top_scorelines": [
+      {
+        "home_score": 2,
+        "away_score": 0,
+        "scoreline": "2-0",
+        "result": "HOME_WIN",
+        "probability": 0.150559
+      },
+      {
+        "home_score": 1,
+        "away_score": 0,
+        "scoreline": "1-0",
+        "result": "HOME_WIN",
+        "probability": 0.148385
+      },
+      {
+        "home_score": 3,
+        "away_score": 0,
+        "scoreline": "3-0",
+        "result": "HOME_WIN",
+        "probability": 0.101843
+      },
+      {
+        "home_score": 2,
+        "away_score": 1,
+        "scoreline": "2-1",
+        "result": "HOME_WIN",
+        "probability": 0.088318
+      },
+      {
+        "home_score": 1,
+        "away_score": 1,
+        "scoreline": "1-1",
+        "result": "DRAW",
+        "probability": 0.087043
+      }
+    ]
+  },
+  "model_details": {
+    "model": "claude-haiku-4-5-20251001-thinking",
+    "base_home_expected_goals": 2.0293,
+    "base_away_expected_goals": 0.5866,
+    "home_goal_adjustment": 0.0,
+    "away_goal_adjustment": 0.0,
+    "adjustment_confidence": 0.85,
+    "adjustment_reasons": [
+      "No additional match-specific information (injuries, weather, lineups) provided to justify adjustment",
+      "Elo difference, recent form (5 and 10 matches), and tournament context already incorporated in base calculation",
+      "Neutral venue prevents home team adjustment per rules",
+      "Portugal's higher recent goals per match (3.0 in last 5) is already factored into attack rating (2.74) and tournament_factor (0.96) appropriately dampens World Cup expectations"
+    ]
+  },
+  "team_features": {
+    "home": {
+      "team": "Portugal",
+      "normalized_team": "Portugal",
+      "latest_finished_match_date": "2026-06-10",
+      "elo": 1910.725828,
+      "total_historical_matches": 695,
+      "rest_days": 8,
+      "matches_5": 5,
+      "win_rate_5": 0.8,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.0,
+      "avg_goals_for_5": 3.0,
+      "avg_goals_against_5": 0.6,
+      "avg_goal_difference_5": 2.4,
+      "avg_points_5": 2.6,
+      "clean_sheet_rate_5": 0.4,
+      "scoring_rate_5": 0.8,
+      "matches_10": 10,
+      "win_rate_10": 0.7,
+      "draw_rate_10": 0.2,
+      "loss_rate_10": 0.1,
+      "avg_goals_for_10": 2.6,
+      "avg_goals_against_10": 0.9,
+      "avg_goal_difference_10": 1.7,
+      "avg_points_10": 2.3,
+      "clean_sheet_rate_10": 0.4,
+      "scoring_rate_10": 0.8
+    },
+    "away": {
+      "team": "DR Congo",
+      "normalized_team": "DR Congo",
+      "latest_finished_match_date": "2026-06-09",
+      "elo": 1687.448976,
+      "total_historical_matches": 524,
+      "rest_days": 9,
+      "matches_5": 5,
+      "win_rate_5": 0.4,
+      "draw_rate_5": 0.2,
+      "loss_rate_5": 0.4,
+      "avg_goals_for_5": 0.8,
+      "avg_goals_against_5": 0.6,
+      "avg_goal_difference_5": 0.2,
+      "avg_points_5": 1.4,
+      "clean_sheet_rate_5": 0.6,
+      "scoring_rate_5": 0.6,
+      "matches_10": 10,
+      "win_rate_10": 0.5,
+      "draw_rate_10": 0.3,
+      "loss_rate_10": 0.2,
+      "avg_goals_for_10": 1.1,
+      "avg_goals_against_10": 0.5,
+      "avg_goal_difference_10": 0.6,
+      "avg_points_10": 1.8,
+      "clean_sheet_rate_10": 0.6,
+      "scoring_rate_10": 0.8
+    },
+    "differences": {
+      "elo_difference": 223.2769,
+      "win_rate_5_difference": 0.4,
+      "win_rate_10_difference": 0.2,
+      "avg_points_5_difference": 1.2,
+      "avg_goals_for_5_difference": 2.2,
+      "avg_goals_against_5_difference": 0.0,
+      "rest_days_difference": -1
+    }
+  },
+  "weather": null,
+  "content_material": {
+    "headline": "Portugal vs DR Congo：模型预测比分 2-0",
+    "summary": "模型预测Portugal 2-0 DR Congo。主胜概率71.4%，平局概率19.0%，客胜概率9.6%。",
+    "disclaimer": "本报告为基于历史数据和概率模型的分析，不代表比赛必然结果。"
+  }
+}

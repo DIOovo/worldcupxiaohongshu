@@ -24,6 +24,22 @@ class BrowserThread(QThread):
         self.action_queue = []
         self.is_running = True
         self.loop = None
+        self.login_in_progress = False
+
+    def enqueue_login(self, phone: str, country_code: str = "+86") -> bool:
+        """加入登录任务；已有登录任务或登录处理中时直接忽略。"""
+
+        if self.login_in_progress:
+            return False
+        if any(action.get("type") == "login" for action in self.action_queue):
+            return False
+        self.login_in_progress = True
+        self.action_queue.append({
+            "type": "login",
+            "phone": phone,
+            "country_code": country_code,
+        })
+        return True
 
     def run(self):
         # 创建新的事件循环
@@ -43,6 +59,12 @@ class BrowserThread(QThread):
                 action = self.action_queue.pop(0)
                 try:
                     if action['type'] == 'login':
+                        self.login_in_progress = True
+                        self.action_queue = [
+                            queued
+                            for queued in self.action_queue
+                            if queued.get("type") != "login"
+                        ]
                         phone = (action.get('phone') or "").strip()
                         country_code = str(action.get('country_code') or "+86").strip() or "+86"
                         if not phone:
@@ -129,6 +151,7 @@ class BrowserThread(QThread):
                         if user_service and current_user:
                             user_service.update_login_status(current_user.id, True)
 
+                        self.login_in_progress = False
                         self.login_success.emit(self.poster)
                     elif action['type'] == 'preview' and self.poster:
                         auto_publish = bool(action.get("auto_publish", False))
@@ -177,6 +200,7 @@ class BrowserThread(QThread):
                             msg += "\n  - Windows（PowerShell）："
                             msg += "\n    $env:PLAYWRIGHT_BROWSERS_PATH=\"$HOME\\.xhs_system\\ms-playwright\"; python -m playwright install chromium"
                         self.login_error.emit(msg)
+                        self.login_in_progress = False
                     elif action['type'] == 'preview':
                         self.preview_error.emit(str(e))
                     elif action['type'] == 'scheduled_publish':
