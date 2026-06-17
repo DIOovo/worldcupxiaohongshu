@@ -597,6 +597,12 @@ class LLMMatchPredictor:
             f"/chat/completions"
         )
 
+        print(
+            "陈工调用了大模型："
+            f"model={self.model} url={url}",
+            flush=True,
+        )
+
         response = requests.post(
             url=url,
 

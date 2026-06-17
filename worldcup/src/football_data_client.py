@@ -1,12 +1,11 @@
-import os
-from pathlib import Path
-
-import requests
-from dotenv import load_dotenv
 import csv
 from datetime import datetime
+import os
 from pathlib import Path
 from zoneinfo import ZoneInfo
+
+from dotenv import load_dotenv
+import requests
 
 # 获取当前 Python 文件的绝对路径
 CURRENT_FILE = Path(__file__).resolve()
@@ -29,20 +28,22 @@ TOKEN = os.getenv("FOOTBALL_DATA_TOKEN")
 # API 基础地址
 BASE_URL = "https://api.football-data.org/v4"
 
-# 请求头
-HEADERS = {
-    "X-Auth-Token": '84f5a229f0184ba7a374d03362c6335d'
-}
+OUTPUT_FILE = PROJECT_ROOT / "data" / "raw" / "world_cup_2026_matches.csv"
 
 
-def get_world_cup_matches():
+def get_world_cup_matches(token=None):
     """获取世界杯比赛数据。"""
 
+    resolved_token = str(token or os.getenv("FOOTBALL_DATA_TOKEN") or "").strip()
+    if not resolved_token:
+        raise ValueError(
+            f"没有读取到 FOOTBALL_DATA_TOKEN，请检查文件：{ENV_PATH}"
+        )
     url = f"{BASE_URL}/competitions/WC/matches"
 
     response = requests.get(
         url,
-        headers=HEADERS,
+        headers={"X-Auth-Token": resolved_token},
         timeout=20
     )
 
@@ -92,15 +93,12 @@ def print_matches(data):
 
         print("-" * 80)
 
-def save_matches_to_csv(data):
+def save_matches_to_csv(data, output_file=OUTPUT_FILE):
     """把世界杯比赛数据保存为 CSV 文件。"""
 
     matches = data.get("matches", [])
-
-    output_dir = PROJECT_ROOT / "data" / "raw"
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    output_file = output_dir / "world_cup_2026_matches.csv"
+    output_file = Path(output_file)
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
     fieldnames = [
         "match_id",
@@ -166,6 +164,7 @@ def save_matches_to_csv(data):
             })
 
     print(f"比赛数据已经保存到：{output_file}")
+    return output_file
 
 def convert_utc_to_local(utc_date_text):
     """将 UTC 比赛时间转换为新加坡/北京时间。"""
@@ -178,22 +177,28 @@ def convert_utc_to_local(utc_date_text):
     )
 
     local_datetime = utc_datetime.astimezone(
-        ZoneInfo("Asia/Singapore")
+        ZoneInfo("Asia/Shanghai")
     )
 
-    return local_datetime.strftime("%Y-%m-%d %H:%M:%S")
+    return local_datetime.strftime("%Y-%m-%d %H:%M:%S%z")
+
+
+def refresh_world_cup_matches(token=None):
+    """从网站接口刷新世界杯比赛并返回 CSV 路径。"""
+
+    data = get_world_cup_matches(token=token)
+    matches = data.get("matches") or []
+    if not matches:
+        raise ValueError("football-data.org 没有返回世界杯比赛")
+    return save_matches_to_csv(data)
+
+
 if __name__ == "__main__":
     # 临时打印路径，检查程序读取的是哪个 .env
     print("当前程序文件：", CURRENT_FILE)
     print("项目根目录：", PROJECT_ROOT)
     print(".env 文件地址：", ENV_PATH)
     print(".env 是否存在：", ENV_PATH.exists())
-
-    if not TOKEN:
-        raise ValueError(
-            f"没有读取到 FOOTBALL_DATA_TOKEN，"
-            f"请检查文件：{ENV_PATH}"
-        )
 
     world_cup_data = get_world_cup_matches()
 

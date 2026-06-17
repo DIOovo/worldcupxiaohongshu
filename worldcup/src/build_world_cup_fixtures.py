@@ -58,6 +58,28 @@ OUTPUT_FILE = (
     / "world_cup_2026_fixtures.csv"
 )
 
+FOOTBALL_DATA_FILE = (
+    PROJECT_ROOT
+    / "data"
+    / "raw"
+    / "world_cup_2026_matches.csv"
+)
+
+FOOTBALL_DATA_UPCOMING_STATUSES = {
+    "SCHEDULED",
+    "TIMED",
+    "POSTPONED",
+}
+
+STAGE_NAMES = {
+    "GROUP_STAGE": "Group Stage",
+    "LAST_16": "Round of 16",
+    "QUARTER_FINALS": "Quarter-finals",
+    "SEMI_FINALS": "Semi-finals",
+    "THIRD_PLACE": "Third-place play-off",
+    "FINAL": "Final",
+}
+
 
 # ============================================================
 # 二、查找原始数据
@@ -357,6 +379,71 @@ def save_fixtures(
         "赛程数量：",
         len(fixtures),
     )
+
+
+def build_fixtures_from_football_data_file(
+    source_file: Path = FOOTBALL_DATA_FILE,
+) -> pd.DataFrame:
+    """将 football-data.org 的 CSV 转换为预测报告所需赛程。"""
+
+    source_file = Path(source_file)
+    if not source_file.exists():
+        raise FileNotFoundError(f"没有找到网站赛程文件：{source_file}")
+
+    data = pd.read_csv(source_file)
+    required = {
+        "match_id",
+        "local_date",
+        "status",
+        "stage",
+        "home_team",
+        "away_team",
+    }
+    missing = required - set(data.columns)
+    if missing:
+        raise ValueError(f"网站赛程文件缺少字段：{sorted(missing)}")
+
+    data = data.copy()
+    data["status"] = data["status"].astype(str).str.strip().str.upper()
+    data = data[data["status"].isin(FOOTBALL_DATA_UPCOMING_STATUSES)].copy()
+    data["kickoff"] = pd.to_datetime(data["local_date"], errors="coerce")
+    data["home_team"] = data["home_team"].astype(str).map(normalize_team_name)
+    data["away_team"] = data["away_team"].astype(str).map(normalize_team_name)
+    data = data.dropna(subset=["kickoff", "home_team", "away_team"])
+    data = data[
+        data["home_team"].map(is_world_cup_2026_team)
+        & data["away_team"].map(is_world_cup_2026_team)
+    ].copy()
+    if data.empty:
+        raise ValueError("网站接口数据中没有可用于预测的 2026 世界杯赛程")
+
+    output_rows = []
+    for _, row in data.sort_values(["kickoff", "match_id"]).iterrows():
+        stage = str(row.get("stage") or "").strip().upper()
+        group = row.get("group")
+        output_rows.append(
+            {
+                "match_id": str(row["match_id"]),
+                "prediction_date": row["kickoff"].strftime("%Y-%m-%d"),
+                "kickoff_time": row["kickoff"].strftime("%Y-%m-%d %H:%M:%S%z"),
+                "home_team": row["home_team"],
+                "away_team": row["away_team"],
+                "tournament": "FIFA World Cup",
+                "stage": STAGE_NAMES.get(
+                    stage,
+                    stage.replace("_", " ").title() or "Group Stage",
+                ),
+                "group": "" if pd.isna(group) else str(group),
+                "neutral": 1,
+                "status": "SCHEDULED",
+            }
+        )
+
+    fixtures = pd.DataFrame(output_rows).drop_duplicates(
+        subset=["match_id"], keep="last"
+    )
+    save_fixtures(fixtures)
+    return fixtures
 
 
 # ============================================================

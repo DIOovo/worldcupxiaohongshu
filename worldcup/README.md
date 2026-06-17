@@ -42,6 +42,44 @@ world-cup-forecast --config config.yaml
 
 报告生成在 `reports/YYYY-MM-DD.md` 和 `reports/YYYY-MM-DD.json`。
 
+## 一键刷新并生成单场报告
+
+根目录的 `main.py` 用于当前 `data/reports/world_cup_2026/*.json`
+这条预测链路。它会依次：
+
+1. 从 GitHub 下载国际比赛历史数据；
+2. 从 football-data.org 拉取世界杯赛程；
+3. 清洗历史比赛；
+4. 转换待预测赛程；
+5. 调用文本接口修正预期进球并生成 JSON。
+
+先在 `.env` 配置：
+
+```env
+FOOTBALL_DATA_TOKEN=你的赛程接口Token
+LLM_BASE_URL=https://你的接口地址/v1
+LLM_API_KEY=你的文本接口密钥
+LLM_MODEL=你的模型名称
+```
+
+以后只需运行：
+
+```bash
+python main.py
+```
+
+默认只生成下一份报告，避免一次调用过多接口。生成全部待预测报告：
+
+```bash
+python main.py --max-reports 0
+```
+
+使用本地数据排错，不重新下载：
+
+```bash
+python main.py --skip-history-download --skip-fixtures-download
+```
+
 ## 接入厂商模型
 
 1. 在 `.env` 写入厂商 API Key。

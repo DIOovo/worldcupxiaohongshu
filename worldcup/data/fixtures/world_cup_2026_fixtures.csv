@@ -1,69 +1,57 @@
 ﻿match_id,prediction_date,kickoff_time,home_team,away_team,tournament,stage,group,neutral,status
-wc2026_001,2026-06-13,,Australia,Turkey,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_002,2026-06-13,,Brazil,Morocco,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_003,2026-06-13,,Haiti,Scotland,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_004,2026-06-13,,Qatar,Switzerland,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_005,2026-06-14,,Germany,Curaçao,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_006,2026-06-14,,Ivory Coast,Ecuador,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_007,2026-06-14,,Netherlands,Japan,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_008,2026-06-14,,Sweden,Tunisia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_009,2026-06-15,,Belgium,Egypt,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_010,2026-06-15,,Iran,New Zealand,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_011,2026-06-15,,Saudi Arabia,Uruguay,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_012,2026-06-15,,Spain,Cape Verde,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_013,2026-06-16,,Argentina,Algeria,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_014,2026-06-16,,Austria,Jordan,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_015,2026-06-16,,France,Senegal,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_016,2026-06-16,,Iraq,Norway,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_017,2026-06-17,,England,Croatia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_018,2026-06-17,,Ghana,Panama,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_019,2026-06-17,,Portugal,DR Congo,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_020,2026-06-17,,Uzbekistan,Colombia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_021,2026-06-18,,Canada,Qatar,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_022,2026-06-18,,Czech Republic,South Africa,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_023,2026-06-18,,Mexico,South Korea,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_024,2026-06-18,,Switzerland,Bosnia and Herzegovina,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_025,2026-06-19,,Brazil,Haiti,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_026,2026-06-19,,Scotland,Morocco,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_027,2026-06-19,,Turkey,Paraguay,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_028,2026-06-19,,United States,Australia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_029,2026-06-20,,Ecuador,Curaçao,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_030,2026-06-20,,Germany,Ivory Coast,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_031,2026-06-20,,Netherlands,Sweden,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_032,2026-06-20,,Tunisia,Japan,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_033,2026-06-21,,Belgium,Iran,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_034,2026-06-21,,New Zealand,Egypt,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_035,2026-06-21,,Spain,Saudi Arabia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_036,2026-06-21,,Uruguay,Cape Verde,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_037,2026-06-22,,Argentina,Austria,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_038,2026-06-22,,France,Iraq,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_039,2026-06-22,,Jordan,Algeria,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_040,2026-06-22,,Norway,Senegal,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_041,2026-06-23,,Colombia,DR Congo,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_042,2026-06-23,,England,Ghana,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_043,2026-06-23,,Panama,Croatia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_044,2026-06-23,,Portugal,Uzbekistan,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_045,2026-06-24,,Bosnia and Herzegovina,Qatar,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_046,2026-06-24,,Canada,Switzerland,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_047,2026-06-24,,Mexico,Czech Republic,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_048,2026-06-24,,Morocco,Haiti,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_049,2026-06-24,,Scotland,Brazil,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_050,2026-06-24,,South Africa,South Korea,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_051,2026-06-25,,Curaçao,Ivory Coast,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_052,2026-06-25,,Ecuador,Germany,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_053,2026-06-25,,Japan,Sweden,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_054,2026-06-25,,Paraguay,Australia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_055,2026-06-25,,Tunisia,Netherlands,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_056,2026-06-25,,United States,Turkey,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_057,2026-06-26,,Cape Verde,Saudi Arabia,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_058,2026-06-26,,Egypt,Iran,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_059,2026-06-26,,New Zealand,Belgium,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_060,2026-06-26,,Norway,France,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_061,2026-06-26,,Senegal,Iraq,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_062,2026-06-26,,Uruguay,Spain,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_063,2026-06-27,,Algeria,Austria,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_064,2026-06-27,,Colombia,Portugal,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_065,2026-06-27,,Croatia,Ghana,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_066,2026-06-27,,DR Congo,Uzbekistan,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_067,2026-06-27,,Jordan,Argentina,FIFA World Cup,Group Stage,,1,SCHEDULED
-wc2026_068,2026-06-27,,Panama,England,FIFA World Cup,Group Stage,,1,SCHEDULED
+537391,2026-06-17,2026-06-17 03:00:00+0800,France,Senegal,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
+537392,2026-06-17,2026-06-17 06:00:00+0800,Iraq,Norway,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
+537397,2026-06-17,2026-06-17 09:00:00+0800,Argentina,Algeria,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
+537398,2026-06-17,2026-06-17 12:00:00+0800,Austria,Jordan,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
+537403,2026-06-18,2026-06-18 01:00:00+0800,Portugal,DR Congo,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
+537409,2026-06-18,2026-06-18 04:00:00+0800,England,Croatia,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED
+537410,2026-06-18,2026-06-18 07:00:00+0800,Ghana,Panama,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED
+537404,2026-06-18,2026-06-18 10:00:00+0800,Uzbekistan,Colombia,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
+537329,2026-06-19,2026-06-19 00:00:00+0800,Czech Republic,South Africa,FIFA World Cup,Group Stage,GROUP_A,1,SCHEDULED
+537335,2026-06-19,2026-06-19 03:00:00+0800,Switzerland,Bosnia and Herzegovina,FIFA World Cup,Group Stage,GROUP_B,1,SCHEDULED
+537336,2026-06-19,2026-06-19 06:00:00+0800,Canada,Qatar,FIFA World Cup,Group Stage,GROUP_B,1,SCHEDULED
+537330,2026-06-19,2026-06-19 09:00:00+0800,Mexico,South Korea,FIFA World Cup,Group Stage,GROUP_A,1,SCHEDULED
+537348,2026-06-20,2026-06-20 03:00:00+0800,United States,Australia,FIFA World Cup,Group Stage,GROUP_D,1,SCHEDULED
+537342,2026-06-20,2026-06-20 06:00:00+0800,Scotland,Morocco,FIFA World Cup,Group Stage,GROUP_C,1,SCHEDULED
+537341,2026-06-20,2026-06-20 08:30:00+0800,Brazil,Haiti,FIFA World Cup,Group Stage,GROUP_C,1,SCHEDULED
+537347,2026-06-20,2026-06-20 11:00:00+0800,Turkey,Paraguay,FIFA World Cup,Group Stage,GROUP_D,1,SCHEDULED
+537359,2026-06-21,2026-06-21 01:00:00+0800,Netherlands,Sweden,FIFA World Cup,Group Stage,GROUP_F,1,SCHEDULED
+537353,2026-06-21,2026-06-21 04:00:00+0800,Germany,Ivory Coast,FIFA World Cup,Group Stage,GROUP_E,1,SCHEDULED
+537354,2026-06-21,2026-06-21 08:00:00+0800,Ecuador,Curaçao,FIFA World Cup,Group Stage,GROUP_E,1,SCHEDULED
+537360,2026-06-21,2026-06-21 12:00:00+0800,Tunisia,Japan,FIFA World Cup,Group Stage,GROUP_F,1,SCHEDULED
+537371,2026-06-22,2026-06-22 00:00:00+0800,Spain,Saudi Arabia,FIFA World Cup,Group Stage,GROUP_H,1,SCHEDULED
+537365,2026-06-22,2026-06-22 03:00:00+0800,Belgium,Iran,FIFA World Cup,Group Stage,GROUP_G,1,SCHEDULED
+537372,2026-06-22,2026-06-22 06:00:00+0800,Uruguay,Cape Verde,FIFA World Cup,Group Stage,GROUP_H,1,SCHEDULED
+537366,2026-06-22,2026-06-22 09:00:00+0800,New Zealand,Egypt,FIFA World Cup,Group Stage,GROUP_G,1,SCHEDULED
+537399,2026-06-23,2026-06-23 01:00:00+0800,Argentina,Austria,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
+537393,2026-06-23,2026-06-23 05:00:00+0800,France,Iraq,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
+537394,2026-06-23,2026-06-23 08:00:00+0800,Norway,Senegal,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
+537400,2026-06-23,2026-06-23 11:00:00+0800,Jordan,Algeria,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
+537405,2026-06-24,2026-06-24 01:00:00+0800,Portugal,Uzbekistan,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
+537411,2026-06-24,2026-06-24 04:00:00+0800,England,Ghana,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED
+537412,2026-06-24,2026-06-24 07:00:00+0800,Panama,Croatia,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED
+537406,2026-06-24,2026-06-24 10:00:00+0800,Colombia,DR Congo,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
+537337,2026-06-25,2026-06-25 03:00:00+0800,Switzerland,Canada,FIFA World Cup,Group Stage,GROUP_B,1,SCHEDULED
+537338,2026-06-25,2026-06-25 03:00:00+0800,Bosnia and Herzegovina,Qatar,FIFA World Cup,Group Stage,GROUP_B,1,SCHEDULED
+537343,2026-06-25,2026-06-25 06:00:00+0800,Scotland,Brazil,FIFA World Cup,Group Stage,GROUP_C,1,SCHEDULED
+537344,2026-06-25,2026-06-25 06:00:00+0800,Morocco,Haiti,FIFA World Cup,Group Stage,GROUP_C,1,SCHEDULED
+537331,2026-06-25,2026-06-25 09:00:00+0800,Czech Republic,Mexico,FIFA World Cup,Group Stage,GROUP_A,1,SCHEDULED
+537332,2026-06-25,2026-06-25 09:00:00+0800,South Africa,South Korea,FIFA World Cup,Group Stage,GROUP_A,1,SCHEDULED
+537355,2026-06-26,2026-06-26 04:00:00+0800,Ecuador,Germany,FIFA World Cup,Group Stage,GROUP_E,1,SCHEDULED
+537356,2026-06-26,2026-06-26 04:00:00+0800,Curaçao,Ivory Coast,FIFA World Cup,Group Stage,GROUP_E,1,SCHEDULED
+537361,2026-06-26,2026-06-26 07:00:00+0800,Tunisia,Netherlands,FIFA World Cup,Group Stage,GROUP_F,1,SCHEDULED
+537362,2026-06-26,2026-06-26 07:00:00+0800,Japan,Sweden,FIFA World Cup,Group Stage,GROUP_F,1,SCHEDULED
+537349,2026-06-26,2026-06-26 10:00:00+0800,Turkey,United States,FIFA World Cup,Group Stage,GROUP_D,1,SCHEDULED
+537350,2026-06-26,2026-06-26 10:00:00+0800,Paraguay,Australia,FIFA World Cup,Group Stage,GROUP_D,1,SCHEDULED
+537395,2026-06-27,2026-06-27 03:00:00+0800,Norway,France,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
+537396,2026-06-27,2026-06-27 03:00:00+0800,Senegal,Iraq,FIFA World Cup,Group Stage,GROUP_I,1,SCHEDULED
+537373,2026-06-27,2026-06-27 08:00:00+0800,Uruguay,Spain,FIFA World Cup,Group Stage,GROUP_H,1,SCHEDULED
+537374,2026-06-27,2026-06-27 08:00:00+0800,Cape Verde,Saudi Arabia,FIFA World Cup,Group Stage,GROUP_H,1,SCHEDULED
+537367,2026-06-27,2026-06-27 11:00:00+0800,New Zealand,Belgium,FIFA World Cup,Group Stage,GROUP_G,1,SCHEDULED
+537368,2026-06-27,2026-06-27 11:00:00+0800,Egypt,Iran,FIFA World Cup,Group Stage,GROUP_G,1,SCHEDULED
+537413,2026-06-28,2026-06-28 05:00:00+0800,Panama,England,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED
+537414,2026-06-28,2026-06-28 05:00:00+0800,Croatia,Ghana,FIFA World Cup,Group Stage,GROUP_L,1,SCHEDULED
+537407,2026-06-28,2026-06-28 07:30:00+0800,Colombia,Portugal,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
+537408,2026-06-28,2026-06-28 07:30:00+0800,DR Congo,Uzbekistan,FIFA World Cup,Group Stage,GROUP_K,1,SCHEDULED
+537401,2026-06-28,2026-06-28 10:00:00+0800,Jordan,Argentina,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
+537402,2026-06-28,2026-06-28 10:00:00+0800,Algeria,Austria,FIFA World Cup,Group Stage,GROUP_J,1,SCHEDULED
